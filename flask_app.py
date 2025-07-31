@@ -7,6 +7,7 @@ from src.config import Config
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Config.SECRET_KEY
+app.config['REDIS_URL']  = Config.REDIS_URL
 
 
 # routes:setup
@@ -34,6 +35,15 @@ CORS(app,
 Talisman(app, 
          force_https=False,
         )
+
+
+# services
+#  :redis
+redis_client = None
+if Config.REDIS_INIT:
+  from src.config.redis import redis_init
+  redis_client = redis_init(app)
+
 
 
 if __name__ == '__main__':

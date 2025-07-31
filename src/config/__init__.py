@@ -16,3 +16,7 @@ class Config:
   
   MESSAGE    = os.getenv('MESSAGE')
 
+  
+  REDIS_INIT = bool(os.getenv('REDIS_INIT'))
+  REDIS_URL  = os.getenv('REDIS_URL')
+
