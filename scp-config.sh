@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 API_HOST=45.77.54.126
 APP_PATH=/root/app/flaskapp
