@@ -1,5 +1,7 @@
-from flask      import Flask
-from flask_cors import CORS
+from flask          import Flask
+from flask_cors     import CORS
+from flask_talisman import Talisman
+
 
 from src.config import Config
 
@@ -12,6 +14,7 @@ app.config['SECRET_KEY'] = Config.SECRET_KEY
 from src.graphql.setup import graphql_mount_endpoint
 graphql_mount_endpoint(app)
 
+# routes:misc.
 @app.route('/', methods=('GET',))
 def hello():
     return f'!hello {Config.MESSAGE}!'
@@ -27,6 +30,12 @@ if Config.PRODUCTION:
     )
 else:
     CORS(app, supports_credentials = True)
+
+
+# security headers setup
+Talisman(app, 
+         force_https=False,
+        )
 
 
 if __name__ == '__main__':
