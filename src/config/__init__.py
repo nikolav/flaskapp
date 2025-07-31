@@ -5,6 +5,5 @@ load_dotenv()
 
 
 class Config:
-  FOO     = os.getenv('FOO')
-  MESSAGE = os.getenv('MESSAGE')
-
+  MESSAGE    = os.getenv('MESSAGE')
+  SECRET_KEY = os.getenv('SECRET_KEY')

@@ -1,7 +1,27 @@
-
 ###
 
 http://127.0.0.1:5000
+
+###
+
+POST http://127.0.0.1:5000/graphql
+Accept: application/json
+Content-Type: application/json
+
+{
+    "query": "{ status }"
+}
+
+###
+###
+
+POST http://127.0.0.1:5000/graphql
+Accept: application/json
+Content-Type: application/json
+
+{
+    "query": "mutation { test }"
+}
 
 ###
 
