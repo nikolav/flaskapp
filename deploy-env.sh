@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WSERVER="./wserver.sh"
-# VARS_PATH="./deploy-vars.sh"
+VARS_PATH="./deploy-vars.sh"
 
 
 # update packages
@@ -47,9 +47,9 @@ ufw enable
 
 
 # set env variables
-# if [ -f "$VARS_PATH" ]; then
-#   source "$VARS_PATH"
-# fi
+if [ -f "$VARS_PATH" ]; then
+  source "$VARS_PATH"
+fi
 
 #  exe server script
 if [ -e "$WSERVER" ]; then

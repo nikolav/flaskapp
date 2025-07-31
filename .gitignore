@@ -340,3 +340,6 @@ var/
 venv.bak/
 venv/
 wheels/
+# 
+deploy-vars.sh
+src/config/vars.py
