@@ -10,18 +10,13 @@ app.config['SECRET_KEY'] = Config.SECRET_KEY
 app.config['REDIS_URL']  = Config.REDIS_URL
 
 
-# routes:setup
-#  graphql @[`POST /graphql`]
-from src.graphql.setup import graphql_mount_endpoint
-graphql_mount_endpoint(app)
+# services:redis
+redis_client = None
+if Config.REDIS_INIT:
+  from src.config.redis import redis_init
+  redis_client = redis_init(app)
 
-#  misc.
-@app.route('/', methods=('GET',))
-def hello():
-    return f'!hello {Config.MESSAGE}!'
-
-
-# cors:setup
+# services:cors
 CORS(app, 
     supports_credentials = True, 
     resources = {
@@ -29,24 +24,22 @@ CORS(app,
     } if Config.PRODUCTION else '',
 )
 
-
-# talisman:setup
+# services:talisman
 #  content security headers
 Talisman(app, 
          force_https=False,
         )
 
 
-# services
-#  :redis
-redis_client = None
-if Config.REDIS_INIT:
-  from src.config.redis import redis_init
-  redis_client = redis_init(app)
+# routes:graphql, @[`POST /graphql`]
+from src.graphql.setup import graphql_mount_endpoint
+graphql_mount_endpoint(app)
 
+# routes:misc.
+@app.route('/', methods=('GET',))
+def hello():
+    return f'!hello {Config.MESSAGE}!'
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

@@ -3,4 +3,17 @@ from src.graphql.setup import query
 
 @query.field('status')
 def resolve_status(_o, _i):
-  return 'ok:7f304074-ba4e-5c75-8db4-faad5328589d'
+  redis_client_version = None
+
+  try:
+    from flask_app import redis_client
+    _err, client = redis_client
+    redis_client_version = client.info().get('redis_version')
+  except:
+    pass
+
+  return {
+    'status' : 'ok',
+    'redis'  : redis_client_version,
+  }
+
