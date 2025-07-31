@@ -32,7 +32,8 @@ else:
     CORS(app, supports_credentials = True)
 
 
-# security headers setup
+# talisman:setup
+#  content security headers
 Talisman(app, 
          force_https=False,
         )
