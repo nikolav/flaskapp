@@ -5,7 +5,10 @@ from flask_talisman import Talisman
 from src.config import Config
 
 
-app = Flask(__name__)
+app = Flask(__name__,
+            template_folder = Config.FLASK_TEMPLATES_FOLDER,
+            )
+
 app.config['SECRET_KEY'] = Config.SECRET_KEY
 app.config['REDIS_URL']  = Config.REDIS_URL
 

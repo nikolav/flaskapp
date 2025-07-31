@@ -21,3 +21,7 @@ class Config:
   REDIS_INIT = bool(os.getenv('REDIS_INIT'))
   REDIS_URL  = os.getenv('REDIS_URL')
 
+  # paths
+  FLASK_TEMPLATES_FOLDER = os.getenv('FLASK_TEMPLATES_FOLDER')
+
+
