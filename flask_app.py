@@ -1,4 +1,5 @@
-from flask import Flask
+from flask      import Flask
+from flask_cors import CORS
 
 from src.config import Config
 
@@ -17,8 +18,15 @@ def hello():
 
 
 # cors:setup
-from src.config.cors import cors_setup
-cors_setup(app)
+if Config.PRODUCTION:    
+    CORS(app, 
+        supports_credentials = True, 
+        resources = {
+            r'/graphql': {'origins': '*'},
+        }
+    )
+else:
+    CORS(app, supports_credentials = True)
 
 
 if __name__ == '__main__':
