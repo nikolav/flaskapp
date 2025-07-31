@@ -40,6 +40,3 @@ graphql_mount_endpoint(app)
 def hello():
     return f'!hello {Config.MESSAGE}!'
 
-
-if __name__ == '__main__':
-    app.run(debug=True)

@@ -11,6 +11,7 @@ class Config:
   ENV         = ENV_
   DEVELOPMENT = 'development' == ENV_
   PRODUCTION  = 'production'  == ENV_
+  PORT        = os.getenv('PORT')
   
   SECRET_KEY = os.getenv('SECRET_KEY')
   
