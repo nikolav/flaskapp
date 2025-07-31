@@ -9,6 +9,6 @@ services:
     #   - pg
     #   - redis
     env_file:
-      - .env
+      - ./.env
     # volumes:
     #   - ./storage:/home/app/storage
