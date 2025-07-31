@@ -15,7 +15,7 @@ class Config:
   
   SECRET_KEY = os.getenv('SECRET_KEY')
   
-  MESSAGE    = os.getenv('MESSAGE')
+  MESSAGE = os.getenv('MESSAGE')
 
   
   REDIS_INIT = bool(os.getenv('REDIS_INIT'))
