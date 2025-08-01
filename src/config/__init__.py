@@ -31,10 +31,11 @@ class Config:
   IO_CORS_ALLOW_ORIGINS = (
     '*',
   )
+
+  # io
+  IOEVENT_REDIS_CACHE_KEY_UPDATED_prefix = os.getenv('IOEVENT_REDIS_CACHE_KEY_UPDATED_prefix')
   
   # jwt
   JWT_EXPIRE_SECONDS      = int(os.getenv('JWT_EXPIRE_SECONDS'))
   JWT_SECRET_ACCESS_TOKEN = os.getenv('JWT_SECRET_ACCESS_TOKEN')
-
-
 
