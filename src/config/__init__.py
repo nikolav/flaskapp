@@ -17,6 +17,9 @@ class Config:
   
   MESSAGE = os.getenv('MESSAGE')
   
+  # keys
+  KEY_TOKEN_CREATED_AT = '@'
+  
   # paths
   FLASK_TEMPLATES_FOLDER = os.getenv('FLASK_TEMPLATES_FOLDER')
 
@@ -28,5 +31,10 @@ class Config:
   IO_CORS_ALLOW_ORIGINS = (
     '*',
   )
+  
+  # jwt
+  JWT_EXPIRE_SECONDS      = int(os.getenv('JWT_EXPIRE_SECONDS'))
+  JWT_SECRET_ACCESS_TOKEN = os.getenv('JWT_SECRET_ACCESS_TOKEN')
+
 
 
