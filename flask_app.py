@@ -1,6 +1,8 @@
 from flask          import Flask
 from flask_cors     import CORS
 from flask_talisman import Talisman
+# https://github.com/miguelgrinberg/flask-socketio/issues/40#issuecomment-48268526
+from flask_socketio import SocketIO
 
 from src.config import Config
 
@@ -32,6 +34,11 @@ CORS(app,
 Talisman(app, 
          force_https=False,
         )
+        
+# services:io
+#  realtime support
+from src.config.io import socketio_setup
+io = socketio_setup(app)
 
 
 # routes:graphql, @[`POST /graphql`]
@@ -39,7 +46,10 @@ from src.graphql.setup import graphql_mount_endpoint
 graphql_mount_endpoint(app)
 
 # routes:misc.
+
 @app.route('/', methods=('GET',))
 def hello():
     return f'!hello {Config.MESSAGE}!'
+
+
 

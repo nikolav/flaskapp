@@ -24,4 +24,9 @@ class Config:
   # paths
   FLASK_TEMPLATES_FOLDER = os.getenv('FLASK_TEMPLATES_FOLDER')
 
+  # io:cors
+  IO_CORS_ALLOW_ORIGINS = (
+    '*',
+  )
+
 
