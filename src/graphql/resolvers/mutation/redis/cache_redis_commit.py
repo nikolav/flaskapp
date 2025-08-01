@@ -17,14 +17,14 @@ def resolve_cacheRedisCommit(_obj, _info, cache_key, patch = None, merge = True)
   changes = 0
 
   try:
-    from flask_app import redis_client
-    _err, client = redis_client
-
-    cache = {} if not client.exists(cache_key) else json.loads(client.get(cache_key).decode())
-    
     if patch:
+      from flask_app import redis_client
+      _err, client = redis_client
+      
       if merge:
+        cache = {} if not client.exists(cache_key) else json.loads(client.get(cache_key).decode())
         merger.merge(cache, patch)
+
       else:
         cache = patch
 
@@ -40,7 +40,6 @@ def resolve_cacheRedisCommit(_obj, _info, cache_key, patch = None, merge = True)
     if 0 < changes:
       err_, ioclient = io
       ioclient.emit(f'{Config.IOEVENT_REDIS_CACHE_KEY_UPDATED_prefix}{cache_key}')
-
 
   return r.dump()
 
