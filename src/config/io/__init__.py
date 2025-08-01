@@ -1,3 +1,5 @@
+
+# https://github.com/miguelgrinberg/flask-socketio/issues/40#issuecomment-48268526
 from flask_socketio import SocketIO
 
 from src.config import Config
