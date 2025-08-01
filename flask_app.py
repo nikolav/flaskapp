@@ -44,7 +44,6 @@ from src.graphql.setup import graphql_mount_endpoint
 graphql_mount_endpoint(app)
 
 # routes:misc.
-
 @app.route('/', methods=('GET',))
 def hello():
     return f'!hello {Config.MESSAGE}!'

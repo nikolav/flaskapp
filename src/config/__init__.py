@@ -16,13 +16,13 @@ class Config:
   SECRET_KEY = os.getenv('SECRET_KEY')
   
   MESSAGE = os.getenv('MESSAGE')
-
   
-  REDIS_INIT = bool(os.getenv('REDIS_INIT'))
-  REDIS_URL  = os.getenv('REDIS_URL')
-
   # paths
   FLASK_TEMPLATES_FOLDER = os.getenv('FLASK_TEMPLATES_FOLDER')
+
+  # cache:redis
+  REDIS_INIT = bool(os.getenv('REDIS_INIT'))
+  REDIS_URL  = os.getenv('REDIS_URL')
 
   # io:cors
   IO_CORS_ALLOW_ORIGINS = (
