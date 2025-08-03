@@ -34,7 +34,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "query": "mutation { cacheRedisCommit(cache_key: \"foo1\", patch: { x1: 10 }) }"
+    "query": "mutation { cacheRedisCommit(cache_key: \"foo1\", patch: { x1: 11 }) }"
 }
 
 ###

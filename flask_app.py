@@ -20,11 +20,10 @@ if Config.REDIS_INIT:
   redis_client = redis_init(app)
 
 # services:cors
+from src.config.cors import cors_resources
 CORS(app, 
     supports_credentials = True, 
-    resources = {
-        r'/graphql': {'origins': '*'},
-    } if Config.PRODUCTION else '',
+    resources = cors_resources if Config.PRODUCTION else '',
 )
 
 # services:talisman
