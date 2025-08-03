@@ -25,11 +25,15 @@ if Config.MONGODB_INIT:
   from src.config.mongo import mongodb_init
   mongo = mongodb_init(app)
 
+# cloud messaging
+if Config.CLOUD_MESSAGING_INIT:
+  import src.config.cloud_messaging
+
 # services:cors
 from src.config.cors import cors_resources
 CORS(app, 
     supports_credentials = True, 
-    resources = cors_resources if Config.PRODUCTION else { r'/*': { 'origins': '*' } },
+    resources = cors_resources if Config.PRODUCTION else { r'.*': { 'origins': '*' } },
   )
 
 # services:talisman
