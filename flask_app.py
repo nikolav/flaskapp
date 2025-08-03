@@ -23,8 +23,9 @@ if Config.REDIS_INIT:
 from src.config.cors import cors_resources
 CORS(app, 
     supports_credentials = True, 
-    resources = cors_resources,
-)
+    resources = cors_resources if Config.PRODUCTION else { r'/*': { 'origins': '*' } },
+  )
+  
 
 # services:talisman
 #  content security headers
