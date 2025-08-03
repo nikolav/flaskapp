@@ -31,7 +31,12 @@ params = {
   # 'marginRight': 0.4,
 }
 
-def printHtmlToPDF(text = ''):
+def _base64_encode(file):
+  return base64.b64encode(file).decode('utf-8')
+
+def printHtmlToPDF(text = '', *, 
+                   base64_encoded = False,
+                  ):
   service = Service()
   driver  = webdriver.Chrome(
     service = service, 
@@ -44,4 +49,5 @@ def printHtmlToPDF(text = ''):
   
   driver.quit()
 
-  return pdf
+  return pdf if not base64_encoded else _base64_encode(pdf)
+

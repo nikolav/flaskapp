@@ -344,3 +344,4 @@ wheels/
 deploy-vars.sh
 src/config/vars.py
 tinker.py
+temp.txt
