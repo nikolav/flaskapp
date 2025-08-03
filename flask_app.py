@@ -43,14 +43,14 @@ Talisman(app,
          force_https=False,
         )
 
-# cloud messaging
-if Config.CLOUD_MESSAGING_INIT:
-  import src.config.cloud_messaging
-
 # services:io
 #  realtime support
 from src.config.io import socketio_setup
 io = socketio_setup(app)
+
+# cloud messaging
+if Config.CLOUD_MESSAGING_INIT:
+  import src.config.cloud_messaging
 
 
 # routes:graphql, @[`POST /graphql`]
