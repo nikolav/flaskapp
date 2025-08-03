@@ -1,9 +1,14 @@
+
+import os
+
 from flask          import Flask
 from flask_cors     import CORS
 from flask_talisman import Talisman
 
 from src.config import Config
 
+
+FLASKAPP_PATH = os.path.dirname(__file__)
 
 app = Flask(__name__,
             template_folder = Config.FLASK_TEMPLATES_FOLDER,
@@ -25,10 +30,6 @@ if Config.MONGODB_INIT:
   from src.config.mongo import mongodb_init
   mongo = mongodb_init(app)
 
-# cloud messaging
-if Config.CLOUD_MESSAGING_INIT:
-  import src.config.cloud_messaging
-
 # services:cors
 from src.config.cors import cors_resources
 CORS(app, 
@@ -41,6 +42,10 @@ CORS(app,
 Talisman(app, 
          force_https=False,
         )
+
+# cloud messaging
+if Config.CLOUD_MESSAGING_INIT:
+  import src.config.cloud_messaging
 
 # services:io
 #  realtime support
