@@ -1,5 +1,8 @@
 import os
+import re
+
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -28,9 +31,7 @@ class Config:
   REDIS_URL  = os.getenv('REDIS_URL')
 
   # io:cors
-  IO_CORS_ALLOW_ORIGINS = (
-    '*',
-  )
+  IO_CORS_ALLOW_ORIGINS = re.split(r'\s+', os.getenv('IO_CORS_ALLOW_ORIGINS').strip())
 
   # io
   IOEVENT_REDIS_CACHE_KEY_UPDATED_prefix = os.getenv('IOEVENT_REDIS_CACHE_KEY_UPDATED_prefix')

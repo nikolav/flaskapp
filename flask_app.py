@@ -23,7 +23,7 @@ if Config.REDIS_INIT:
 from src.config.cors import cors_resources
 CORS(app, 
     supports_credentials = True, 
-    resources = cors_resources if Config.PRODUCTION else '',
+    resources = cors_resources,
 )
 
 # services:talisman
@@ -48,4 +48,9 @@ def hello():
     return f'!hello {Config.MESSAGE}!'
 
 
+# middleware:before
+from src.middleware import handle_before_request
+@app.before_request
+def mw_before_request():
+  return handle_before_request()
 
