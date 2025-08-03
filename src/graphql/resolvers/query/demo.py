@@ -3,7 +3,9 @@ from src.graphql.setup import query
 
 
 @query.field('demo')
-def resolve_demo(_o, _i):
+def resolve_demo(_o, _i):  
+  return ''
+  
   # import base64
   # from flask import render_template
   # from src.services.pdf import printHtmlToPDF
@@ -16,5 +18,5 @@ def resolve_demo(_o, _i):
 
   
 
-  return ''
+  
 

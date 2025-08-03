@@ -8,12 +8,14 @@ load_dotenv()
 
 
 ENV_ = os.getenv('ENV')
+DEVELOPMENT_ = 'development' == ENV_
+PRODUCTION_  = 'production'  == ENV_
 
 class Config:
 
   ENV         = ENV_
-  DEVELOPMENT = 'development' == ENV_
-  PRODUCTION  = 'production'  == ENV_
+  DEVELOPMENT = DEVELOPMENT_
+  PRODUCTION  = PRODUCTION_
   PORT        = os.getenv('PORT')
   
   SECRET_KEY = os.getenv('SECRET_KEY')
@@ -39,4 +41,8 @@ class Config:
   # jwt
   JWT_EXPIRE_SECONDS      = int(os.getenv('JWT_EXPIRE_SECONDS'))
   JWT_SECRET_ACCESS_TOKEN = os.getenv('JWT_SECRET_ACCESS_TOKEN')
+
+  # db:mongo
+  MONGODB_INIT = bool(os.getenv('MONGODB_INIT'))
+  MONGODB_URI = os.getenv('MONGODB_URI_production') if PRODUCTION_ else os.getenv('MONGODB_URI_development')
 

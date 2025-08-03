@@ -19,20 +19,25 @@ if Config.REDIS_INIT:
   from src.config.redis import redis_init
   redis_client = redis_init(app)
 
+# db:mongo
+mongo = None
+if Config.MONGODB_INIT:
+  from src.config.mongo import mongodb_init
+  mongo = mongodb_init(app)
+
 # services:cors
 from src.config.cors import cors_resources
 CORS(app, 
     supports_credentials = True, 
     resources = cors_resources if Config.PRODUCTION else { r'/*': { 'origins': '*' } },
   )
-  
 
 # services:talisman
 #  content security headers
 Talisman(app, 
          force_https=False,
         )
-        
+
 # services:io
 #  realtime support
 from src.config.io import socketio_setup
@@ -54,4 +59,5 @@ from src.middleware import handle_before_request
 @app.before_request
 def mw_before_request():
   return handle_before_request()
+
 
