@@ -8,17 +8,17 @@ http://80.240.25.97:5000
 
 ###
 
-http://qyilcewitexjndalxkexol.online
+https://qyilcewitexjndalxkexol.online
 
 ###
 
-POST http://qyilcewitexjndalxkexol.online/graphql
+POST https://qyilcewitexjndalxkexol.online/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyMzMzLCJAIjoiMjAyNS0wOC0wMSAwOTozMjo0MS4zNjQ4MjUrMDA6MDAifQ.l4i5Q-1YRvSOTSp8_owJwDdQf5v3zmfASOWeQbe4-0I
 
 {
-    "query": "{ demo }"
+    "query": "{ status }"
 }
 
 ###
