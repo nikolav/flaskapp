@@ -16,7 +16,4 @@ def resolve_demo(_o, _i):
   # tok = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyMzMzLCJAIjoiMjAyNS0wOC0wMSAwOTozMjo0MS4zNjQ4MjUrMDA6MDAifQ.l4i5Q-1YRvSOTSp8_owJwDdQf5v3zmfASOWeQbe4-0I'
   # return JWT.is_valid(tok)
 
-  
-
-  
 
