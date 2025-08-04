@@ -17,8 +17,8 @@ def socketio_setup(app):
   if not initialized:  
     try:
       io = SocketIO(app, 
+              cors_allowed_origins      = Config.IO_CORS_ALLOW_ORIGINS if Config.PRODUCTION else '*', 
               cors_supports_credentials = True,
-              cors_allowed_origins = Config.IO_CORS_ALLOW_ORIGINS if Config.PRODUCTION else '*', 
           )
           
     except Exception as e:
