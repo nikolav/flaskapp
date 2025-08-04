@@ -33,8 +33,8 @@ if Config.MONGODB_INIT:
 # services:cors
 from src.config.cors import cors_resources
 CORS(app, 
-    supports_credentials = True, 
     resources = cors_resources if Config.PRODUCTION else { r'.*': { 'origins': '*' } },
+    supports_credentials = True, 
   )
 
 # services:talisman

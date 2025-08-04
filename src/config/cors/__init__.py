@@ -1,5 +1,5 @@
 
 cors_resources = {
-  r'/graphql': {'origins': '*'},
+  r'/graphql.*': {'origins': '*'},
 }
 
