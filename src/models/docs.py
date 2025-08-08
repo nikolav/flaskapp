@@ -16,6 +16,8 @@ from flask_app import db
 from . import docsTable
 from . import ln_docs_tags
 
+from src.models.tags import Tags
+
 from src.utils.mixins import MixinTimestamps
 from src.utils.mixins import MixinExistsID
 from src.utils.mixins import MixinFieldMergeable
@@ -86,3 +88,29 @@ class Docs(MixinTimestamps, MixinExistsID, MixinFieldMergeable, MixinByIds, _dbc
     
     return d
   
+
+  @staticmethod
+  def tagged(tag_name):
+    return _dbcli.session.scalars(
+      _dbcli.select(
+        Docs
+      ).join(
+        Docs.tags
+      ).where(
+        Tags.tag == tag_name
+      ))
+
+
+  @staticmethod
+  def by_tag_and_id(tag, id):
+    return _dbcli.session.scalar(
+      _dbcli.select(
+        Docs
+      ).join(
+        Docs.tags
+      ).where(
+          Tags.tag == tag,
+          Docs.id  == id,
+      ))
+
+
