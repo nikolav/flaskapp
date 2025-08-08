@@ -1,3 +1,4 @@
+
 from src.graphql.setup import mutation
 
 from flask_app import db
@@ -10,8 +11,9 @@ from src.models.tags import Tags
 def resolve_test(_o, _i):  
   _err, cli = db
   
-  d = Docs(data = { 'x': 1 })
-  t = Tags.by_name('foos', create = True)
+  t = Tags.by_name('@vars', create = True)
+  d = Docs(data = { 'admin': 'nikolav' })
+
   t.docs.append(d)
 
   # cli.session.add(t)

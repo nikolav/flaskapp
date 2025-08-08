@@ -4,28 +4,34 @@ from src.graphql.setup import query
 
 @query.field('demo')
 def resolve_demo(_o, _i):  
+  # from flask_app       import db
+  from src.models.docs import Docs
+
+  dd = Docs.tagged('@vars')
+  return Docs.dicts(dd)
+  
   # return []
-  from firebase_admin import auth
-  from src.utils import Utils
-  from marshmallow import Schema
-  from marshmallow import fields
+  # from firebase_admin import auth
+  # from src.utils import Utils
+  # from marshmallow import Schema
+  # from marshmallow import fields
 
-  class SchemaUser(Schema):
-    uid = fields.String(required = True)
+  # class SchemaUser(Schema):
+  #   uid = fields.String(required = True)
   
-  r = Utils.ResponseStatus()
+  # r = Utils.ResponseStatus()
 
-  try:
-    r.status = SchemaUser().dump(auth.get_user('HJnEKuILPvQ6BFkg4Lers4qqv243'))
+  # try:
+  #   r.status = SchemaUser().dump(auth.get_user('HJnEKuILPvQ6BFkg4Lers4qqv243'))
     
-  except Exception as e:
-    r.error = e
+  # except Exception as e:
+  #   r.error = e
   
-  else:
-    from src.services.jwt import JWT
-    return { 'access_token': JWT.encode(r.status) }
+  # else:
+  #   from src.services.jwt import JWT
+  #   return { 'access_token': JWT.encode(r.status) }
 
-  return r.dump()
+  # return r.dump()
   
   # import base64
   # from flask import render_template
