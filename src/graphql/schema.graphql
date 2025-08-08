@@ -23,7 +23,7 @@ type Query {
 ## @Mutation
 
 type Mutation {
-  test: String!
+  test: JsonData
 
   # cache:redis
   cacheRedisCommit(cache_key: String!, patch: JsonData, merge: Boolean ): JsonData!

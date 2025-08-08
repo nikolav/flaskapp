@@ -50,3 +50,12 @@ class Config:
   CLOUD_MESSAGING_INIT        = bool(os.getenv('CLOUD_MESSAGING_INIT'))
   CLOUD_MESSAGING_CERTIFICATE = os.getenv('CLOUD_MESSAGING_CERTIFICATE')
 
+  # db
+  DB_INIT                       = bool(os.getenv('DB_INIT'))
+  DATABASE_URI_development      = os.getenv('DATABASE_URI_development')
+  DATABASE_URI_production       = os.getenv('DATABASE_URI_production')
+  TABLE_NAME_SUFFIX_dev         = os.getenv('TABLE_NAME_SUFFIX_dev')
+  TABLE_NAME_SUFFIX_production  = os.getenv('TABLE_NAME_SUFFIX_production')
+  SQLALCHEMY_ECHO               = bool(os.getenv('SQLALCHEMY_ECHO'))
+  REBUILD_SCHEMA                = bool(os.getenv('REBUILD_SCHEMA'))
+

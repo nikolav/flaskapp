@@ -15,7 +15,12 @@ app = Flask(__name__,
             )
 
 app.config['SECRET_KEY'] = Config.SECRET_KEY
-app.config['REDIS_URL']  = Config.REDIS_URL
+
+app.config['REDIS_URL'] = Config.REDIS_URL
+
+app.config['SQLALCHEMY_DATABASE_URI']        = Config.DATABASE_URI_production if Config.PRODUCTION else Config.DATABASE_URI_development
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO']                = not Config.PRODUCTION or Config.SQLALCHEMY_ECHO
 
 
 # services:redis
@@ -30,6 +35,24 @@ if Config.MONGODB_INIT:
   from src.config.mongo import mongodb_init
   mongo = mongodb_init(app)
 
+# db
+db = None
+if Config.DB_INIT:
+  from src.config.db import sqldb_init
+  db = sqldb_init(app)
+
+  with app.app_context():
+    from src.config.db.models_init import models_init
+    models_init(db)
+
+    # setup tables
+    import src.config.db.tables_init
+
+# services:io
+#  realtime support
+from src.config.io import socketio_setup
+io = socketio_setup(app)
+
 # services:cors
 from src.config.cors import cors_resources
 CORS(app, 
@@ -42,11 +65,6 @@ CORS(app,
 Talisman(app, 
          force_https=False,
         )
-
-# services:io
-#  realtime support
-from src.config.io import socketio_setup
-io = socketio_setup(app)
 
 # cloud messaging
 if Config.CLOUD_MESSAGING_INIT:
