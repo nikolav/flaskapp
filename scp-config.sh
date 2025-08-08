@@ -8,5 +8,4 @@ scp ./.env root@$API_HOST:$APP_PATH
 scp ./deploy-vars.sh root@$API_HOST:$APP_PATH
 scp ./src/config/vars.py root@$API_HOST:$APP_PATH/src/config/vars.py
 scp ./ngapp---iec2cy5qtf---dev-firebase-adminsdk-ynt8w-78ca6332f5.json root@$API_HOST:$APP_PATH
-# scp ./jfejcxjyujx-firebase-adminsdk-ci75i-a4ad90c0ca.json root@$API_HOST:$APP_PATH
 # scp ./redis/redis.conf root@$API_HOST:$APP_PATH/redis

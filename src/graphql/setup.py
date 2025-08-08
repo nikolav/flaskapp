@@ -25,7 +25,7 @@ type_defs = load_schema_from_path(os.path.join(
 schema = make_executable_schema(type_defs, query, mutation)
 
 def graphql_mount_endpoint(app):
-  @app.route('/graphql', methods=('POST',))
+  @app.route('/graphql', methods = ('POST',))
   def route_handle_graphql():
         
     # GraphQL queries are always sent as POST
@@ -36,7 +36,7 @@ def graphql_mount_endpoint(app):
     success, result = graphql_sync(
       schema,
       data,
-      context_value={ 'request': request },
+      context_value = { 'request': request },
       debug = app.debug
     )
 
