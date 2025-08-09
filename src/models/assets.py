@@ -18,6 +18,7 @@ from flask_app import db
 from . import assetsTable
 from . import ln_assets_tags
 from . import ln_assets_assets
+from . import ln_orders_products
 
 from src.utils.mixins import MixinTimestamps
 from src.utils.mixins import MixinByIds
@@ -162,8 +163,10 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   tags: Mapped[List['Tags']] = relationship(secondary = ln_assets_tags, back_populates = 'assets')
   #  addtional related records
   docs: Mapped[List['Docs']] = relationship(back_populates = 'asset')
-  #  related AssetsSites:orders
-  # orders: Mapped[List['Orders']] = relationship(secondary = ln_orders_products, back_populates = 'products')
+  #  related site orders
+  site_orders: Mapped[List['Orders']] = relationship(back_populates = 'site')
+  # related assetSites:orders
+  orders: Mapped[List['Orders']] = relationship(secondary = ln_orders_products, back_populates = 'products')
 
   # self-referential, has|belongs-to assets
   assets_has: Mapped[List['Assets']] = relationship(
@@ -175,6 +178,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   )
 
   
+  # public
   def tags_add(self, *tags, _commit = True):
     changes = 0
 
@@ -189,7 +193,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
     return changes
 
 
-  # public 
+  # public
   def tags_rm(self, *tags, _commit = True):
     changes = 0
 

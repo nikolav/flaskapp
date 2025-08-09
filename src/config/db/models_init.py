@@ -7,6 +7,7 @@ def models_init(db):
     from src.models.docs   import Docs
     from src.models.tags   import Tags
     from src.models.assets import Assets
+    from src.models.orders import Orders
 
     # drop/create schema
     if Config.REBUILD_SCHEMA:
