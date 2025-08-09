@@ -14,6 +14,7 @@ from uuid import uuid4 as uuid
 from flask_app import db
 
 from . import docsTable
+from . import assetsTable
 from . import ln_docs_tags
 
 from src.models.tags import Tags
@@ -33,15 +34,19 @@ _schemaDocsDumpMany = SchemaSerializeDocs(many = True)
 
 
 # https://docs.sqlalchemy.org/en/20/tutorial/metadata.html#declaring-mapped-classes
-class Docs(MixinTimestamps, MixinExistsID, MixinFieldMergeable, MixinByIds, _dbcli.Model):
+class Docs(MixinTimestamps, MixinExistsID, MixinByIds, MixinFieldMergeable, _dbcli.Model):
   __tablename__ = docsTable
 
   id   : Mapped[int]           = mapped_column(primary_key = True)
   key  : Mapped[Optional[str]] = mapped_column(default = uuid)
   data : Mapped[dict]          = mapped_column(JSON)
+
+  # foreign key
+  asset_id = mapped_column(_dbcli.ForeignKey(f'{assetsTable}.id'))
   
   # virtual
-  tags: Mapped[List['Tags']] = relationship(secondary = ln_docs_tags, back_populates = 'docs')
+  tags  : Mapped[List['Tags']] = relationship(secondary = ln_docs_tags, back_populates = 'docs')
+  asset : Mapped['Assets']     = relationship(back_populates = 'docs')
 
   
   # magic

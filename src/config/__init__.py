@@ -26,7 +26,8 @@ class Config:
   KEY_TOKEN_CREATED_AT = '@'
   
   # paths
-  FLASK_TEMPLATES_FOLDER = os.getenv('FLASK_TEMPLATES_FOLDER')
+  FLASK_TEMPLATES_FOLDER     = os.getenv('FLASK_TEMPLATES_FOLDER')
+  CATEGORY_KEY_ASSETS_prefix = os.getenv('CATEGORY_KEY_ASSETS_prefix')
 
   # cache:redis
   REDIS_INIT = bool(os.getenv('REDIS_INIT'))
@@ -58,4 +59,5 @@ class Config:
   TABLE_NAME_SUFFIX_production  = os.getenv('TABLE_NAME_SUFFIX_production')
   SQLALCHEMY_ECHO               = bool(os.getenv('SQLALCHEMY_ECHO'))
   REBUILD_SCHEMA                = bool(os.getenv('REBUILD_SCHEMA'))
+
 

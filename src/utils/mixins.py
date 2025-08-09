@@ -49,3 +49,27 @@ class MixinFieldMergeable():
   def data_update(self, *, patch, FIELD = 'data'):
     setattr(self, FIELD, patch)
 
+
+class MixinIncludesTags():
+  # public
+  def includes_tags(self, *args, ANY = False):
+    tags_self = [t.tag for t in self.tags]
+    return all(tag in tags_self for tag in args) if True != ANY else any(tag in tags_self for tag in args)
+
+
+class MixinByIdsAndType():
+  @classmethod
+  def by_ids_and_type(cls, *ids, type = None):
+    q = cli.select(
+        cls
+      ).where(
+        cls.id.in_(ids)
+      )
+    if None != type:
+      q = q.where(
+          type == cls.type
+        )
+    
+    return cli.session.scalars(q)
+
+
