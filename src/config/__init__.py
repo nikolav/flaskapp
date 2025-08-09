@@ -17,6 +17,7 @@ class Config:
   DEVELOPMENT = DEVELOPMENT_
   PRODUCTION  = PRODUCTION_
   PORT        = os.getenv('PORT')
+  APP_NAME    = os.getenv('APP_NAME')
   
   SECRET_KEY = os.getenv('SECRET_KEY')
   
