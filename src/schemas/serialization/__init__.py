@@ -51,3 +51,20 @@ class SchemaSerializeAssets(SchemaSerializeTimes):
   docs       = fields.List(fields.Nested(SchemaSerializeDocs()))
   assets_has = fields.List(fields.Nested(lambda: SchemaSerializeAssets(exclude = ('assets_has',))))
 
+
+class SchemaSerializeOrders(SchemaSerializeTimes):
+  id     = fields.Integer()
+  key    = fields.String()
+  status = fields.String()
+  data   = fields.Dict()
+  notes  = fields.String()
+
+  # foreign key
+  site_id   = fields.Integer()
+  
+  # virtal
+  site     = fields.Nested(SchemaSerializeAssets(exclude = ('assets_has',)))
+  tags     = fields.List(fields.String())
+  products = fields.List(fields.Nested(SchemaSerializeAssets(exclude = ('assets_has',))))
+
+

@@ -26,6 +26,7 @@ from src.utils.mixins import MixinExistsID
 from src.utils.mixins import MixinFieldMergeable
 from src.utils.mixins import MixinIncludesTags
 from src.utils.mixins import MixinByIdsAndType
+from src.utils.mixins import MixinManageTagsOnAssets
 
 from src.models.docs  import Docs
 from src.models.docs  import Tags
@@ -132,7 +133,7 @@ class AssetsIOEvents(Enum):
   # IOEVENT_ASSETS_FORMS_SUBMISSION_prefix      = 'IOEVENT_ASSETS_FORMS_SUBMISSION:kLctvwLigtUAaHzTD:'
 
 
-class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, MixinExistsID, MixinFieldMergeable, _dbcli.Model):
+class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, MixinExistsID, MixinFieldMergeable, MixinManageTagsOnAssets, _dbcli.Model):
   __tablename__ = assetsTable
 
   # ID
@@ -176,37 +177,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
     backref       = backref('assets_belong', lazy = 'dynamic'),
     # back_populates = 'assets'
   )
-
-  
-  # public
-  def tags_add(self, *tags, _commit = True):
-    changes = 0
-
-    for tname in filter(lambda p: not self.includes_tags(p), tags):
-      tp = Tags.by_name(tname, create = True, _commit = _commit)
-      tp.assets.append(self)
-      changes += 1
     
-    if (0 < changes) and (True == _commit):
-      _dbcli.session.commit()
-    
-    return changes
-
-
-  # public
-  def tags_rm(self, *tags, _commit = True):
-    changes = 0
-
-    for tname in filter(lambda p: self.includes_tags(p), tags):
-      tp = Tags.by_name(tname, create = True, _commit = _commit)
-      tp.assets.remove(self)
-      changes += 1
-    
-    if (0 < changes) and (True == _commit):
-      _dbcli.session.commit()
-    
-    return changes
-  
 
   # public
   def is_status(self, s):
@@ -424,35 +395,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
       ))
 
 
-# bind listener for Assets:group .location 
-#  update lat:lng @data.coords if location provided
-# @event.listens_for(Assets.location, 'set')
-# def on_updated_assets_sites_location(asset, value, _oldvalue, _initiator):
-#   changes = 0
-#   if (AssetsType.PEOPLE_GROUP_TEAM.value == asset.type):
-#     if not value:
-#       # @empty, clear current lat:lng
-#       asset.data_update(
-#         patch = {
-#           'coords': None
-#         })
-#       changes += 1
 
-#     else:
-#       from servcies.googlemaps import geocode_address
-#       res = geocode_address(value)
-#       asset.data_update(
-#         patch = {
-#           'coords': None if res['error'] else res['status']['coords']})
-#       changes += 1
-    
-#     if 0 < changes:
-#       _dbcli.session.commit()
-  
-
-##
-## assets table fields @chatGPT response
-##
 
 # When designing a database table for managing general company assets, you'll want to include fields that capture essential details about each asset. Here’s a basic outline of fields you might include:
 

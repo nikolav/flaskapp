@@ -1,5 +1,7 @@
+
 from datetime import datetime
 from datetime import timezone
+from copy     import deepcopy
 
 from sqlalchemy     import func
 from sqlalchemy.orm import Mapped
@@ -7,11 +9,11 @@ from sqlalchemy.orm import mapped_column
 
 from flask_app import db
 
-from copy                   import deepcopy
+from src.models.tags            import Tags
 from src.utils.merge_strategies import dict_deepmerger_extend_lists as merger
 
 
-_err, cli = db
+_err, _dbcli = db
 
 
 class MixinTimestamps():
@@ -23,8 +25,8 @@ class MixinTimestamps():
 class MixinExistsID():
   @classmethod
   def id_exists(cls, id):
-    return 0 < cli.session.scalar(
-      cli.select(
+    return 0 < _dbcli.session.scalar(
+      _dbcli.select(
         func.count(cls.id)
       ).where(
         cls.id == id
@@ -35,11 +37,11 @@ class MixinExistsID():
 class MixinByIds():
   @classmethod
   def by_ids(cls, *ids):
-    q = cli.select(
+    q = _dbcli.select(
         cls
       ).where(
         cls.id.in_(ids))
-    return cli.session.scalars(q)
+    return _dbcli.session.scalars(q)
 
 
 class MixinFieldMergeable():
@@ -60,7 +62,7 @@ class MixinIncludesTags():
 class MixinByIdsAndType():
   @classmethod
   def by_ids_and_type(cls, *ids, type = None):
-    q = cli.select(
+    q = _dbcli.select(
         cls
       ).where(
         cls.id.in_(ids)
@@ -70,6 +72,45 @@ class MixinByIdsAndType():
           type == cls.type
         )
     
-    return cli.session.scalars(q)
+    return _dbcli.session.scalars(q)
 
+
+class MixinManageTagsBase():
+  FIELD = None
+  # public
+  def tags_add(self, *tags, _commit = True):
+    changes = 0
+
+    for tname in filter(lambda p: not self.includes_tags(p), tags):
+      tp = Tags.by_name(tname, create = True, _commit = _commit)
+      getattr(tp, self.FIELD).append(self)
+      changes += 1
+    
+    if (0 < changes) and (True == _commit):
+      _dbcli.session.commit()
+    
+    return changes
+  
+  
+  # public
+  def tags_rm(self, *tags, _commit = True):
+    changes = 0
+
+    for tname in filter(lambda p: self.includes_tags(p), tags):
+      tp = Tags.by_name(tname, create = True, _commit = _commit)
+      getattr(tp, self.FIELD).remove(self)
+      changes += 1
+    
+    if (0 < changes) and (True == _commit):
+      _dbcli.session.commit()
+    
+    return changes
+
+
+class MixinManageTagsOnOrders(MixinManageTagsBase):
+  FIELD = 'orders'
+
+
+class MixinManageTagsOnAssets(MixinManageTagsBase):
+  FIELD = 'assets'
 
