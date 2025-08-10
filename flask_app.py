@@ -79,6 +79,11 @@ graphql_mount_endpoint(app)
 from src.blueprints.home import bp_home
 app.register_blueprint(bp_home)
 
+# mount route:home [@/]
+if not Config.PRODUCTION:
+  from src.blueprints.testing import bp_testing
+  app.register_blueprint(bp_testing)
+
 
 # middleware:before
 from src.middleware import handle_before_request
