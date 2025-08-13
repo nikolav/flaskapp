@@ -242,5 +242,3 @@ log_message "Please restart your session or run 'newgrp docker' to apply Docker 
 
 exit 0
 
-
-
