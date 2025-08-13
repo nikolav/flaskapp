@@ -35,7 +35,7 @@ if Config.MONGODB_INIT:
   from src.config.mongo import mongodb_init
   mongo = mongodb_init(app)
 
-# db
+# db:sql
 db = None
 if Config.DB_INIT:
   from src.config.db import sqldb_init

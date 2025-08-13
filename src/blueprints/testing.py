@@ -17,13 +17,9 @@ CORS(bp_testing)
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
   _err, dd = db
-  a1 = dd.session.scalar(
-    dd.select(
-      Assets
-    ).where(
-      1 == Assets.id
-    ))
-      
-  return SchemaSerializeAssets(many = True, exclude = ('assets_has',)).dump(a1.assets_has)
+
+  a3 = dd.session.get(Assets, 3)
+  
+  return SchemaSerializeAssets(many = True, exclude = ('assets_has',)).dump(a3.assets_has) if a3 else []
 
 
