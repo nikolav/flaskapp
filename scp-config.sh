@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_HOST=80.240.25.97
+API_HOST=45.76.91.37
 APP_PATH=/root/app/flaskapp
 
 scp ./.env root@$API_HOST:$APP_PATH
