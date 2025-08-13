@@ -81,11 +81,8 @@
 
 
 
-# ======
-# ======
-
-
-
+##################################################################
+##################################################################
 # Improved Web Development Server Setup Script with Docker Support
 
 # --- Configuration Section ---
@@ -100,12 +97,12 @@ log_message() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a $LOG_FILE
 }
 
-check_command() {
-    if ! command -v $1 &> /dev/null; then
-        log_message "ERROR: $1 could not be found"
-        exit 1
-    fi
-}
+# check_command() {
+#     if ! command -v $1 &> /dev/null; then
+#         log_message "ERROR: $1 could not be found"
+#         exit 1
+#     fi
+# }
 
 # --- Initial Setup ---
 log_message "Starting server setup process"
@@ -181,12 +178,13 @@ ufw allow 5000/tcp | tee -a $LOG_FILE
 ufw --force enable | tee -a $LOG_FILE
 
 # Configure fail2ban
-systemctl enable fail2ban | tee -a $LOG_FILE
-systemctl start fail2ban | tee -a $LOG_FILE
+# systemctl enable fail2ban | tee -a $LOG_FILE
+# systemctl start fail2ban | tee -a $LOG_FILE
 
 # Configure automatic security updates
 echo 'Unattended-Upgrade::Automatic-Reboot "true";' > /etc/apt/apt.conf.d/50unattended-upgrades
-echo 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+echo 'Unattended-Upgrade::Mail "admin@nikolav.rs";' >> /etc/apt/apt.conf.d/50unattended-upgrades
+echo 'Unattended-Upgrade::Automatic-Reboot-Time "03:33";' >> /etc/apt/apt.conf.d/50unattended-upgrades
 
 # --- Environment Configuration ---
 # Load variables if exists
@@ -205,12 +203,12 @@ fi
 log_message "Running post-installation checks..."
 
 # Verify installations
-check_command git
-check_command docker
-check_command docker-compose
+# check_command git
+# check_command docker
+# check_command docker-compose
 
 # Docker health check
-docker run hello-world | tee -a $LOG_FILE
+# docker run hello-world | tee -a $LOG_FILE
 
 # --- User Configuration ---
 log_message "Setting up user environment..."
@@ -218,8 +216,6 @@ log_message "Setting up user environment..."
 # Create useful aliases
 echo "alias ll='ls -AlFht --color=auto --group-directories-first '" >> /home/$USERNAME/.bashrc
 echo "alias gs='git status '" >> /home/$USERNAME/.bashrc
-echo "alias dc='docker compose '" >> /home/$USERNAME/.bashrc
-echo "alias dps='docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}\" '" >> /home/$USERNAME/.bashrc
 
 # --- Cleanup ---
 log_message "Cleaning up..."
@@ -240,5 +236,6 @@ ufw status verbose | tee -a $LOG_FILE
 log_message "Server setup completed successfully. A log has been saved to $LOG_FILE"
 log_message "Please restart your session or run 'newgrp docker' to apply Docker group changes"
 
-exit 0
+# exit 0
+
 
