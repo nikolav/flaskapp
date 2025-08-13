@@ -216,10 +216,10 @@ docker run hello-world | tee -a $LOG_FILE
 log_message "Setting up user environment..."
 
 # Create useful aliases
-echo "alias ll='ls -AlFht --color=auto --group-directories-first'" >> /home/$USERNAME/.bashrc
-echo "alias gs='git status'" >> /home/$USERNAME/.bashrc
-echo "alias dc='docker compose'" >> /home/$USERNAME/.bashrc
-echo "alias dps='docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}\"'" >> /home/$USERNAME/.bashrc
+echo "alias ll='ls -AlFht --color=auto --group-directories-first '" >> /home/$USERNAME/.bashrc
+echo "alias gs='git status '" >> /home/$USERNAME/.bashrc
+echo "alias dc='docker compose '" >> /home/$USERNAME/.bashrc
+echo "alias dps='docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}\" '" >> /home/$USERNAME/.bashrc
 
 # --- Cleanup ---
 log_message "Cleaning up..."
