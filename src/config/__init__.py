@@ -49,8 +49,8 @@ class Config:
   MONGODB_URI = os.getenv('MONGODB_URI_production') if PRODUCTION_ else os.getenv('MONGODB_URI_development')
 
   # cloud messaging
-  CLOUD_MESSAGING_INIT        = bool(os.getenv('CLOUD_MESSAGING_INIT'))
-  CLOUD_MESSAGING_CERTIFICATE = os.getenv('CLOUD_MESSAGING_CERTIFICATE')
+  FIREBASEADMIN_INIT           = bool(os.getenv('FIREBASEADMIN_INIT'))
+  CERTIFICATE_FIREBASEADMINSDK = os.getenv('CERTIFICATE_FIREBASEADMINSDK')
 
   # db
   DB_INIT                       = bool(os.getenv('DB_INIT'))
