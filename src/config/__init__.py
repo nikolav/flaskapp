@@ -60,5 +60,10 @@ class Config:
   TABLE_NAME_SUFFIX_production  = os.getenv('TABLE_NAME_SUFFIX_production')
   SQLALCHEMY_ECHO               = bool(os.getenv('SQLALCHEMY_ECHO'))
   REBUILD_SCHEMA                = bool(os.getenv('REBUILD_SCHEMA'))
-
+  
+  # auth
+  PATHS_SKIP_AUTH = (
+    r'^/$',
+    r'^/auth/authenticate$',
+  )
 

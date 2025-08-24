@@ -4,12 +4,12 @@ http://127.0.0.1:5000
 
 ###
 
-POST http://127.0.0.1:5000/testing
+POST http://127.0.0.1:5000/auth/authenticate
 Accept: application/json
 Content-Type: application/json
 
 {
-    
+    "uid": "kH3FJ0gVTiUonMzG7cS4vKVjiMT2"
 }
 
 ###
@@ -22,9 +22,10 @@ https://qyilcewitexjndalxkexol.online
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer -
 
 {
     "query": "{ status }"

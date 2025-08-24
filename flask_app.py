@@ -79,6 +79,10 @@ graphql_mount_endpoint(app)
 from src.blueprints.home import bp_home
 app.register_blueprint(bp_home)
 
+# mount route:auth [@/auth]
+from src.blueprints.auth import bp_auth
+app.register_blueprint(bp_auth)
+
 # mount route:home [@/]
 if not Config.PRODUCTION:
   from src.blueprints.testing import bp_testing
@@ -86,9 +90,9 @@ if not Config.PRODUCTION:
 
 
 # middleware:before
-from src.middleware import handle_before_request
+from src.middleware.auth import authenticate
 @app.before_request
-def mw_before_request():
-  return handle_before_request()
+def handle_before_request():
+  return authenticate()
 
 
