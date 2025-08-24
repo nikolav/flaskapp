@@ -22,6 +22,17 @@ https://qyilcewitexjndalxkexol.online
 
 ###
 
+http://127.0.0.1:5000/auth/who
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer -
+
+{
+    
+}
+
+###
+
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
