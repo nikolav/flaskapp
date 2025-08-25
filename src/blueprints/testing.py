@@ -2,12 +2,6 @@
 from flask      import Blueprint
 from flask_cors import CORS
 
-from flask_app import db
-
-from src.models.assets         import Assets
-from src.schemas.serialization import SchemaSerializeAssets
-# from src.config import Config
-
 
 bp_testing = Blueprint('testing', __name__, url_prefix = '/testing')
 
@@ -16,10 +10,15 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  _err, dd = db
+  from src.services.messaging import cm_notification_send
+  cm_notification_send(
+    tokens = (
+          '',
+        ),
+    payload =  {
+                'title' : 'foo:1',
+                'body'  : 'foo:2',
+              })
 
-  a3 = dd.session.get(Assets, 3)
-  
-  return SchemaSerializeAssets(many = True, exclude = ('assets_has',)).dump(a3.assets_has) if a3 else []
-
+  return []
 
