@@ -47,6 +47,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer -
 
 {
     "query": "{ cacheRedisGetCacheByKey(cache_key: \"foo1\") }"
@@ -57,9 +58,10 @@ Content-Type: application/json
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer -
 
 {
-    "query": "mutation { cacheRedisCommit(cache_key: \"foo1\", patch: { x1: 11 }) }"
+    "query": "mutation { cacheRedisCommit(cache_key: \"foo1\", patch: { x1: 122 }) }"
 }
 
 ###
