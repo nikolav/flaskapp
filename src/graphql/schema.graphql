@@ -24,5 +24,9 @@ type Mutation {
 
   # cache:redis
   cacheRedisCommit(cache_key: String!, patch: JsonData, merge: Boolean ): JsonData!
+
+  # messaging
+  cloudMessagingPing(payload: JsonData): JsonData!
+  
 }
 
