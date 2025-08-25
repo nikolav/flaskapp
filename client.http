@@ -72,7 +72,7 @@ Content-Type: application/json
 Authorization: Bearer -
 
 {
-    "query": "mutation { cacheRedisCommit(cache_key: \"foo1\", patch: { x1: 122 }) }"
+    "query": "mutation { cacheRedisCommit(cache_key: \"foo1\", patch: { x1: 333 }) }"
 }
 
 ###

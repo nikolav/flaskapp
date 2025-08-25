@@ -10,15 +10,6 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.services.messaging import cm_notification_send
-  cm_notification_send(
-    tokens = (
-          '',
-        ),
-    payload =  {
-                'title' : 'foo:1',
-                'body'  : 'foo:2',
-              })
-
-  return []
+  from src.services.cache import Cache
+  return Cache.cloud_messaging_tokens('kH3FJ0gVTiUonMzG7cS4vKVjiMT2')
 
