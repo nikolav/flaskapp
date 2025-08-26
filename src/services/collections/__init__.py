@@ -11,7 +11,7 @@ class Collections:
   _err, client = mongo
 
   @staticmethod
-  def query(collection_name, q):
+  def ls(collection_name, q):
     coll = Collections.client.db[collection_name]
     return coll.find(q)
 
@@ -28,7 +28,7 @@ class Collections:
     return collection_name in Collections.client.db.list_collection_names() if collection_name else False
 
   @staticmethod
-  def by_name(collection_name):
+  def lsa(collection_name):
     return Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
   
   @staticmethod
@@ -42,8 +42,9 @@ class Collections:
   
   @staticmethod
   def commit(collection_name, *, patches):
-    changes = 0
     # patches: { merge?: boolean; data: dict }[]
+    changes = 0
+    
     if patches:
       col = Collections.client.db[collection_name]
       for patch in patches:
@@ -52,7 +53,6 @@ class Collections:
           if 'id' in patch['data']:
             del patch['data']['id']
           col.insert_one(patch['data'])
-          changes += 1
 
         else:
           # update
@@ -66,7 +66,7 @@ class Collections:
             # patch
             col.find_one_and_update({ '_id': oid }, { '$set': patch['data'] })
 
-          changes += 1
+        changes += 1
 
     return changes
   
