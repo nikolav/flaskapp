@@ -1,10 +1,10 @@
 
-from functools import reduce
 from bson import json_util
 from bson import ObjectId
 
 from flask_app import mongo
-from src.utils import Utils
+from src.utils.dates import with_doc_timestamps
+from src.utils.merge_strategies import dict_deepmerger_extend_lists as merger
 
 
 class Collections:
@@ -16,9 +16,17 @@ class Collections:
     return coll.find(q)
 
   @staticmethod
+  def lsa(collection_name):
+    return Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
+  
+  @staticmethod
+  def json(doc):
+    return json_util.loads(json_util.dumps(doc))
+  
+  @staticmethod
   def dump_doc(doc):
     # whole doc to extended JSON dict
-    d = json_util.loads(json_util.dumps(doc))
+    d = Collections.json(doc)
     oid = d.pop('_id', None)
     d['id'] = str(oid) if isinstance(oid, ObjectId) else oid['$oid'] if (isinstance(oid, dict) and ('$oid' in oid)) else oid
     return d
@@ -26,10 +34,6 @@ class Collections:
   @staticmethod
   def exists(collection_name):
     return collection_name in Collections.client.db.list_collection_names() if collection_name else False
-
-  @staticmethod
-  def lsa(collection_name):
-    return Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
   
   @staticmethod
   def toID(id):
@@ -48,23 +52,29 @@ class Collections:
     if patches:
       col = Collections.client.db[collection_name]
       for patch in patches:
-        if not (('id' in patch['data']) and Collections.id_exists(collection_name, patch['data']['id'])):
+        dd = patch['data']
+        if not (('id' in dd) and Collections.id_exists(collection_name, dd['id'])):
           # create
-          if 'id' in patch['data']:
-            del patch['data']['id']
-          col.insert_one(patch['data'])
+          if 'id' in dd:
+            del dd['id']
+          col.insert_one(with_doc_timestamps(dd))
 
         else:
-          # update
-          oid = Collections.toID(patch['data'].pop('id', None))
+          # id-exists, update
+
+          oid = Collections.toID(dd.pop('id', None))
+          q   = { '_id': oid }
           
+          # replace
           if False == patch.get('merge', None):
-            # replace
-            col.find_one_and_replace({ '_id': oid }, patch['data'])
+            col.find_one_and_replace(q, with_doc_timestamps(dd))
             
+          # patch
           else:
-            # patch
-            col.find_one_and_update({ '_id': oid }, { '$set': patch['data'] })
+            dp = Collections.json(col.find_one(q))
+            del dp['_id']
+            merger.merge(dp, dd)
+            col.find_one_and_update(q, { '$set': with_doc_timestamps(dp) })
 
         changes += 1
 

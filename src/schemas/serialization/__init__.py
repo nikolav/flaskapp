@@ -100,3 +100,6 @@ class SchemaMongoDoc(Schema):
   # expose Mongo '_id' as 'id'
   id = ObjectIdField(attribute = '_id', data_key = 'id', dump_only = True)
 
+class SchemaMongoDocData(SchemaMongoDoc, SchemaSerializeTimes):
+  data = fields.Dict()
+
