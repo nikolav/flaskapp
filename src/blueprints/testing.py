@@ -11,5 +11,5 @@ CORS(bp_testing)
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
   from src.services.collections import Collections
-  return list(map(Collections.dump_doc, Collections.by_name('main')))
+  return { 'count': Collections.count_all('main') }
 

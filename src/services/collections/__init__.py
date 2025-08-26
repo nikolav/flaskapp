@@ -11,6 +11,11 @@ class Collections:
   _err, client = mongo
 
   @staticmethod
+  def query(collection_name, q):
+    coll = Collections.client.db[collection_name]
+    return coll.find(q)
+
+  @staticmethod
   def dump_doc(doc):
     # whole doc to extended JSON dict
     d = json_util.loads(json_util.dumps(doc))
@@ -24,7 +29,7 @@ class Collections:
 
   @staticmethod
   def by_name(collection_name):
-    Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
+    return Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
   
   @staticmethod
   def toID(id):
@@ -53,7 +58,7 @@ class Collections:
           # update
           oid = Collections.toID(patch['data'].pop('id', None))
           
-          if False == patch['merge']:
+          if False == patch.get('merge', None):
             # replace
             col.find_one_and_replace({ '_id': oid }, patch['data'])
             
@@ -70,5 +75,16 @@ class Collections:
     col = Collections.client.db[collection_name]
     res = col.delete_many({ '_id': { '$in': [Collections.toID(id) for id in ids] } })
     return res.deleted_count
+  
+  @staticmethod
+  def count_all(collection_name):
+    col = Collections.client.db[collection_name]
+    return col.estimated_document_count()
+
+  @staticmethod
+  def count(collection_name, q, **kwargs):
+    coll = Collections.client.db[collection_name]
+    return coll.count_documents(q, **kwargs)
+
 
 
