@@ -1,8 +1,10 @@
 
+from functools import reduce
 from bson import json_util
 from bson import ObjectId
 
 from flask_app import mongo
+from src.utils import Utils
 
 
 class Collections:
@@ -22,6 +24,51 @@ class Collections:
 
   @staticmethod
   def by_name(collection_name):
-    return Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
+    Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
+  
+  @staticmethod
+  def toID(id):
+    return ObjectId(id) if (isinstance(id, str) and ObjectId.is_valid(id)) else id
+  
+  @staticmethod
+  def id_exists(collection_name, id):
+    col = Collections.client.db[collection_name]
+    return None != col.find_one({ '_id': Collections.toID(id) }, { '_id': 1 })
+  
+  @staticmethod
+  def commit(collection_name, *, patches):
+    changes = 0
+    # patches: { merge?: boolean; data: dict }[]
+    if patches:
+      col = Collections.client.db[collection_name]
+      for patch in patches:
+        if not (('id' in patch['data']) and Collections.id_exists(collection_name, patch['data']['id'])):
+          # create
+          if 'id' in patch['data']:
+            del patch['data']['id']
+          col.insert_one(patch['data'])
+          changes += 1
+
+        else:
+          # update
+          oid = Collections.toID(patch['data'].pop('id', None))
+          
+          if False == patch['merge']:
+            # replace
+            col.find_one_and_replace({ '_id': oid }, patch['data'])
+            
+          else:
+            # patch
+            col.find_one_and_update({ '_id': oid }, { '$set': patch['data'] })
+
+          changes += 1
+
+    return changes
+  
+  @staticmethod
+  def rm(collection_name, *, ids):
+    col = Collections.client.db[collection_name]
+    res = col.delete_many({ '_id': { '$in': [Collections.toID(id) for id in ids] } })
+    return res.deleted_count
 
 
