@@ -1,9 +1,12 @@
 
 import json
+from bson import ObjectId
 
 # https://marshmallow.readthedocs.io/en/stable/quickstart.html#field-validators-as-methods
 from marshmallow import Schema
 from marshmallow import fields
+from marshmallow import ValidationError
+from marshmallow import INCLUDE
 
 
 class SchemaSerializeTimes(Schema):
@@ -67,4 +70,33 @@ class SchemaSerializeOrders(SchemaSerializeTimes):
   tags     = fields.List(fields.String())
   products = fields.List(fields.Nested(SchemaSerializeAssets(exclude = ('assets_has',))))
 
+
+class ObjectIdField(fields.Field):
+  def _serialize(self, value, attr, obj, **kwargs):
+    if value is None:
+      return None
+    if isinstance(value, ObjectId):
+      return str(value)
+    if isinstance(value, str) and ObjectId.is_valid(value):
+      # already a valid hex string; pass through
+      return value
+    raise ValidationError('Invalid ObjectId for serialization')
+
+  def _deserialize(self, value, attr, data, **kwargs):
+    if value is None:
+      return None
+    if isinstance(value, ObjectId):
+      return value
+    if isinstance(value, str) and ObjectId.is_valid(value):
+      return ObjectId(value)
+    raise ValidationError('Invalid ObjectId')
+  
+##SchemaMongoDoc
+class SchemaMongoDoc(Schema):
+  class Meta:
+    # keep undeclared fields on load (optional)
+    unknown = INCLUDE
+
+  # expose Mongo '_id' as 'id'
+  id = ObjectIdField(attribute = '_id', data_key = 'id', dump_only = True)
 
