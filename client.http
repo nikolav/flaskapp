@@ -88,3 +88,36 @@ Authorization: Bearer -
 
 ###
 
+POST http://127.0.0.1:5000/graphql
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer -
+
+{
+    "query": "{ collectionsDocsByTopic(topic: \"main\") }"
+}
+
+###
+
+POST http://127.0.0.1:5000/graphql
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer -
+
+{
+    "query": "mutation { collectionsDocsUpsert(topic: \"main\", patches: [ { data: { id: \"68add2c9a461ac1b176fc84d\", data: { foo: 1 } } } ]) }"
+}
+
+###
+
+POST http://127.0.0.1:5000/graphql
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer -
+
+{
+    "query": "mutation { collectionsDocsDrop(topic: \"main\", ids: [\"68add2c9a461ac1b176fc84d\"]) }"
+}
+
+###
+
