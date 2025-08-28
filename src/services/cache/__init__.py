@@ -24,7 +24,7 @@ class Cache:
   @staticmethod
   def commit(token, *, patch = None, merge = True):
     if patch:
-      if merge:
+      if False != merge:
         cache = Cache.key(token)
         merger.merge(cache, patch)
 
