@@ -70,3 +70,8 @@ class Config:
     r'^/auth/authenticate$',
   )
 
+  # payments
+  ADYEN_ENV     = os.getenv('ADYEN_ENV', 'test')
+  ADYEN_API_KEY = os.getenv('ADYEN_API_KEY', None)
+
+  
