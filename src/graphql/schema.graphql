@@ -35,6 +35,9 @@ type Mutation {
   # collections:docs
   collectionsDocsUpsert(topic: String!, patches: [JsonData!]!): JsonData!
   collectionsDocsDrop(topic: String!, ids: [ID!]!): JsonData!
+
+  # mail
+  mailSendMessage(to: String!, subject: String!, template: String!, context: JsonData): JsonData!
   
 }
 

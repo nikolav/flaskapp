@@ -10,8 +10,5 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.services.collections  import Collections
-  from src.schemas.serialization import SchemaMongoDocData
-  
-  return SchemaMongoDocData(many = True).dump(Collections.lsa('main'))
+  return []
 
