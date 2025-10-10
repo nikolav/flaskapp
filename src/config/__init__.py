@@ -69,4 +69,14 @@ class Config:
     r'^/$',
     r'^/auth/authenticate$',
   )
+  
+  # mail
+  mail = {
+    'HOST'         : os.getenv('EMAIL_SERVER'),
+    'PORT'         : int(os.getenv('EMAIL_SERVER_PORT')),
+    'USER'         : os.getenv('EMAIL_USER'),
+    'PASSWORD'     : os.getenv('EMAIL_PASSWORD'),
+    'EMAIL_SENDER' : os.getenv('EMAIL_DEFAULT_SENDER'),
+  }
 
+  
