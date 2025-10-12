@@ -1,9 +1,9 @@
 
 import json
-from flask_app import redis_client
 
-from src.utils.merge_strategies import dict_deepmerger_extend_lists as merger
-from src.config                 import Config
+from flask_app        import redis_client
+from src.config       import Config
+from src.utils.discts import Dicts
 
 
 class Cache:
@@ -26,7 +26,7 @@ class Cache:
     if patch:
       if False != merge:
         cache = Cache.key(token)
-        merger.merge(cache, patch)
+        Dicts.merge(cache, patch)
 
       else:
         cache = patch
