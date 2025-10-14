@@ -145,7 +145,18 @@ Content-Type: application/json
 Authorization: Bearer -
 
 {
-    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:bar:3\" }) }"
+    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:bar:5\" }) }"
+}
+
+###
+
+POST https://qyilcewitexjndalxkexol.online/graphql
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer -
+
+{
+    "query": "mutation { viberChannelSetupChannelsDrop(channels: [\"foo1\"]) }"
 }
 
 ###
