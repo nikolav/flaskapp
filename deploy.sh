@@ -7,7 +7,7 @@ if [ -e "$WSERVER" ]; then
   chmod 755 $WSERVER
 fi
 
-docker-compose up -d --build api
+docker compose up -d --build api
 
 
 ## run script in container
