@@ -58,7 +58,7 @@ def resolve_viberChannelSetupSetWebhook(_obj, _info, url, auth_token, is_global 
               }
 
     Cache.auth_profile_patch(g.user.uid, 
-                            patch = { [Config.VIBER_CHANNELS_CACHE_KEY]: { ch_name: ch_info } })
+                            patch = { Config.VIBER_CHANNELS_CACHE_KEY: { ch_name: ch_info } })
 
   except Exception as e:
     r.error = e
