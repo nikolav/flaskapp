@@ -145,7 +145,7 @@ Content-Type: application/json
 Authorization: Bearer -
 
 {
-    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:bar:5\" }) }"
+    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:bar:1234\" }) }"
 }
 
 ###
