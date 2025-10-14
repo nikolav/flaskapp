@@ -55,4 +55,5 @@ type Mutation {
   ): JsonData!
   viberChannelSetupChannelsDrop(channels: [String!]): JsonData!
   viberSendTextMessage(payload: JsonData!): JsonData!
+  viberSendPictureMessage(payload: JsonData!): JsonData!
 }
