@@ -145,7 +145,7 @@ Content-Type: application/json
 Authorization: Bearer -
 
 {
-    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:bar:1234\" }) }"
+    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:bar:55555\" }) }"
 }
 
 ###
@@ -157,6 +157,17 @@ Authorization: Bearer -
 
 {
     "query": "mutation { viberChannelSetupChannelsDrop(channels: [\"foo1\"]) }"
+}
+
+###
+
+POST https://qyilcewitexjndalxkexol.online/graphql
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer -
+
+{
+    "query": "mutation { viberSendPictureMessage(payload: { foo1: { text: \"pumpaj💯\", media: \"https://firebasestorage.googleapis.com/v0/b/ngapp---iec2cy5qtf---dev.firebasestorage.app/o/temp%2F2025-10-15%2001_24_23-temp_2025-02-23%2018_53_32-Window.png%20(320%C3%97252).jpg?alt=media&token=10222c8e-0d2b-424e-ab1b-390091d6133a\" } }) }"
 }
 
 ###
