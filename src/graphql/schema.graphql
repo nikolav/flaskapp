@@ -53,6 +53,6 @@ type Mutation {
     auth_token: String!
     is_global: Boolean
   ): JsonData!
-  # viberChannelSetupChannelsDrop(channelNames: [String!]): JsonData!
+  viberChannelSetupChannelsDrop(channels: [String!]): JsonData!
   viberSendTextMessage(payload: JsonData!): JsonData!
 }
