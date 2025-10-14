@@ -20,6 +20,5 @@ def route_handle_webhook_viber_channel(webhook_name = ''):
   #  "message_token":241256543215 
   #  "chat_hostname": "tN6Hzq",
   # }
-  print(f'[webhook_name]: {webhook_name}')
   return make_response(jsonify(''), 200)
 
