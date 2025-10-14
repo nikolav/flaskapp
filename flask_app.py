@@ -83,7 +83,11 @@ app.register_blueprint(bp_home)
 from src.blueprints.auth import bp_auth
 app.register_blueprint(bp_auth)
 
-# mount route:home [@/]
+# mount viber webhook [POST @/webhook_viber_channel/<webhook_name>]
+from src.blueprints.webhook_viber_channel import bp_webhook_viber_channel
+app.register_blueprint(bp_webhook_viber_channel)
+
+# mount route:testing [@/testing]
 if not Config.PRODUCTION:
   from src.blueprints.testing import bp_testing
   app.register_blueprint(bp_testing)

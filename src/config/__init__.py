@@ -68,6 +68,9 @@ class Config:
   PATHS_SKIP_AUTH = (
     r'^/$',
     r'^/auth/authenticate$',
+
+    # webhook:viber
+    r'^/webhook_viber_channel/.*',
   )
   
   # mail
@@ -78,5 +81,12 @@ class Config:
     'PASSWORD'     : os.getenv('EMAIL_PASSWORD'),
     'EMAIL_SENDER' : os.getenv('EMAIL_DEFAULT_SENDER'),
   }
+
+  # viber
+  VIBER_CHANNELS_CACHE_KEY        = 'viber_channels'
+  VIBER_CHANNELS_SET_WEBHOOK_URL  = os.getenv('VIBER_CHANNELS_SET_WEBHOOK_URL')
+  VIBER_CHANNELS_ACCOUNT_INFO_URL = os.getenv('VIBER_CHANNELS_ACCOUNT_INFO_URL')
+  VIBER_CHANNELS_POST_MESSAGE_URL = os.getenv('VIBER_CHANNELS_POST_MESSAGE_URL')
+  VIBER_CHANNELS_CACHEID          = os.getenv('VIBER_CHANNELS_CACHEID')
 
   

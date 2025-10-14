@@ -1,13 +1,24 @@
+
 ###
 
-http://127.0.0.1:5000
+https://qyilcewitexjndalxkexol.online
+
+###
+
+POST http://127.0.0.1:5000/webhook_viber_channel/foo
+Accept: application/json
+Content-Type: application/json
+
+{
+
+}
 
 ###
 
 POST http://127.0.0.1:5000/testing
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
 
@@ -18,7 +29,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
   "query": "mutation { cloudMessagingPing }"
@@ -31,7 +42,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "idToken": "-"
+    "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjlkMjEzMGZlZjAyNTg3ZmQ4ODYxODg2OTgyMjczNGVmNzZhMTExNjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbmdhcHAtLS1pZWMyY3k1cXRmLS0tZGV2IiwiYXVkIjoibmdhcHAtLS1pZWMyY3k1cXRmLS0tZGV2IiwiYXV0aF90aW1lIjoxNzU5MTczMjU3LCJ1c2VyX2lkIjoia0gzRkowZ1ZUaVVvbk16RzdjUzR2S1ZqaU1UMiIsInN1YiI6ImtIM0ZKMGdWVGlVb25Nekc3Y1M0dktWamlNVDIiLCJpYXQiOjE3NjA0NzM1ODAsImV4cCI6MTc2MDQ3NzE4MCwiZW1haWwiOiJhZG1pbkBuaWtvbGF2LnJzIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImFkbWluQG5pa29sYXYucnMiXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.RDvPe2ZPNcxKdGLfUwN80x9wlxay9KQ_-sgyhYBEuUYjYdYe7Z4SbZbbQ2aEa3hKo0jF1DZIGGbs6xNHb6u9g5WeXQpoP5fjrYFKLDAY5zUUfs3xkGXURWa7wazNBXGyXy_6B2HTBV8QQ4eb9s307koaqTTT2pGPqnmwmy49_O7aMyzD0wkLipcQbjOAeLF6FxQiOOuB45Yn8JeOe_AkEwR12BZZZHkr75IjO2FR75Ep8Mm4Jq07TK_jXG_KhA3x79afEp1ydG0FlCuH9AboznCA59vCcTZT4v4AHdyDBG-PxUljiyQgL40lwKv2Fx491nY0-IbvdTV2-SnzxhaecA"
 }
 
 ###
@@ -40,14 +51,10 @@ http://80.240.25.97:5000
 
 ###
 
-https://qyilcewitexjndalxkexol.online
-
-###
-
 http://127.0.0.1:5000/auth/who
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
     
@@ -58,7 +65,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
     "query": "{ status }"
@@ -69,7 +76,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
     "query": "{ cacheRedisGetCacheByKey(cache_key: \"foo1\") }"
@@ -80,7 +87,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
     "query": "mutation { cacheRedisCommit(cache_key: \"foo1\", patch: { x1: 333 }) }"
@@ -91,7 +98,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
     "query": "{ collectionsDocsByTopic(topic: \"main\") }"
@@ -102,7 +109,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
     "query": "mutation { collectionsDocsUpsert(topic: \"main\", patches: [ { data: { id: \"68add2c9a461ac1b176fc84d\", data: { foo: 1 } } } ]) }"
@@ -113,7 +120,7 @@ Authorization: Bearer -
 POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer -
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
 
 {
     "query": "mutation { collectionsDocsDrop(topic: \"main\", ids: [\"68add2c9a461ac1b176fc84d\"]) }"
@@ -121,3 +128,13 @@ Authorization: Bearer -
 
 ###
 
+POST http://127.0.0.1:5000/graphql
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJrSDNGSjBnVlRpVW9uTXpHN2NTNHZLVmppTVQyIiwiQCI6IjIwMjUtMTAtMTQgMjA6MjY6NDUuMjY1NjMzKzAwOjAwIn0.jxxjLK2VO8ufP1smgIDjwIyvplKtjt-sQjV-HaBM_qE
+
+{
+    "query": "mutation { viberChannelSetupSetWebhook(url: \"http://127.0.0.1:5000/webhook_viber_channel/foo1\", auth_token: \"5579191d2db18060-487ed49442499e23-f5f4f65db491c587\") }"
+}
+
+###

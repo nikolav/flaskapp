@@ -18,16 +18,18 @@ type Query {
 
   # collections
   collectionsDocsByTopic(topic: String!, config: JsonData): JsonData!
-
 }
 
 ############
 ## @Mutation
 
 type Mutation {
-
   # cache:redis
-  cacheRedisCommit(cache_key: String!, patch: JsonData, merge: Boolean ): JsonData!
+  cacheRedisCommit(
+    cache_key: String!
+    patch: JsonData
+    merge: Boolean
+  ): JsonData!
 
   # messaging
   cloudMessagingPing(payload: JsonData): JsonData!
@@ -37,7 +39,20 @@ type Mutation {
   collectionsDocsDrop(topic: String!, ids: [ID!]!): JsonData!
 
   # mail
-  mailSendMessage(to: String!, subject: String!, template: String!, context: JsonData): JsonData!
-  
-}
+  mailSendMessage(
+    to: String!
+    subject: String!
+    template: String!
+    context: JsonData
+  ): JsonData!
 
+  # messaging:viber
+  # https://developers.viber.com/docs/tools/channels-post-api/
+  viberChannelSetupSetWebhook(
+    url: String!
+    auth_token: String!
+    is_global: Boolean
+  ): JsonData!
+  # viberChannelSetupChannelsDrop(channelNames: [String!]): JsonData!
+  viberSendTextMessage(payload: JsonData!): JsonData!
+}
