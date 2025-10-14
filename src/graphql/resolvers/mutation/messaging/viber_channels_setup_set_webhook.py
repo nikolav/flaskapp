@@ -1,5 +1,4 @@
 
-
 import requests
 
 from src.graphql.setup  import mutation
@@ -9,7 +8,6 @@ from src.config         import Config
 from src.services.cache import Cache
 
 from flask import g
-# from flask_app import db
 
 
 # viberChannelSetupSetWebhook(url: String!, auth_token: String!, is_global: Boolean): JsonData!
