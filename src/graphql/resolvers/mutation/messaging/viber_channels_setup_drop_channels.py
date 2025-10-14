@@ -16,15 +16,14 @@ def resolve_viberChannelSetupChannelsDrop(_obj, _info, channels = []):
 
   try:
     if channels:
-      viber_channels = Cache.auth_profile(g.user.uid).get(Config.VIBER_CHANNELS_CACHE_KEY, {})
+      profile        = Cache.auth_profile(g.user.uid)
+      viber_channels = profile.get(Config.VIBER_CHANNELS_CACHE_KEY, {})
       # if has channels to drop
       #   reset channels cache
       if any(ch in viber_channels for ch in channels):
         patch = { ch: viber_channels[ch] for ch in viber_channels if not ch in channels }
-        Cache.auth_profile_patch(g.user.uid, 
-            patch = { Config.VIBER_CHANNELS_CACHE_KEY: patch }, 
-            merge = False,
-          )
+        profile[Config.VIBER_CHANNELS_CACHE_KEY] = patch
+        Cache.auth_profile_patch(g.user.uid, patch = profile, merge = False)
 
   except Exception as e:
     r.error = e
