@@ -8,8 +8,8 @@ SERVICE_NGINX := nginx
 
 .PHONY: restart-nginx
 restart-nginx:
-	@sudo systemctl restart $(SERVICE_NGINX)
-	@sudo systemctl status $(SERVICE_NGINX) --no-pager
+	@systemctl restart $(SERVICE_NGINX)
+	@systemctl status $(SERVICE_NGINX) --no-pager
 
 # ============================
 #  Deployment
