@@ -24,8 +24,8 @@ restart-nginx:
 # ============================
 
 # Setup env
-.PHONY: deploy-env
-deploy-env:
+.PHONY: env
+env:
 	@echo "$(YELLOW)[*] Setting up environment...$(RESET)"
 	@. ./deploy-env.sh
 	@echo "$(GREEN)[✓] Environment ready.$(RESET)"
