@@ -27,7 +27,7 @@ deploy-clean:
 	@echo "[*] Cleaning Docker resources and redeploying..."
 	@docker compose down --remove-orphans
 	@docker system prune -af
-	@make deploy
+	@$(MAKE) deploy
 	@echo "[✓] Fresh deployment completed."
 
 # Deploy
