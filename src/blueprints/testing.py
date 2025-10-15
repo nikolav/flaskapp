@@ -11,4 +11,3 @@ CORS(bp_testing)
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
   return []
-
