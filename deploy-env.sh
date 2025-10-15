@@ -49,6 +49,8 @@ apt-get install -y \
     jq \
     make \
     nginx \
+    build-essential \
+    make \
     python3-pip | tee -a $LOG_FILE
 
 # --- Docker Installation ---

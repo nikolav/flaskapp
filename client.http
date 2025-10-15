@@ -5,7 +5,7 @@ https://qyilcewitexjndalxkexol.online
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/webhook_viber_channel/foo
+POST http://127.0.0.1:5000/webhook_viber_channel/foo
 Accept: application/json
 Content-Type: application/json
 
@@ -15,7 +15,7 @@ Content-Type: application/json
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/testing
+POST http://127.0.0.1:5000/testing
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -26,7 +26,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -37,7 +37,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/auth/authenticate
+POST http://127.0.0.1:5000/auth/authenticate
 Accept: application/json
 Content-Type: application/json
 
@@ -51,7 +51,7 @@ http://80.240.25.97:5000
 
 ###
 
-https://qyilcewitexjndalxkexol.online/auth/who
+http://127.0.0.1:5000/auth/who
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -62,7 +62,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -73,7 +73,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -84,7 +84,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -95,7 +95,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -106,7 +106,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -117,7 +117,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -128,29 +128,29 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
 
 {
-    "query": "mutation { viberChannelSetupSetWebhook(url: \"https://qyilcewitexjndalxkexol.online/webhook_viber_channel/foo1\", auth_token: \"55792a1839738787-c1944f4adcfe0153-b92072ba54fddfae\") }"
+    "query": "mutation { viberChannelSetupSetWebhook(url: \"http://127.0.0.1:5000/webhook_viber_channel/foo1\", auth_token: \"5579191d2db18060-487ed49442499e23-f5f4f65db491c587\") }"
 }
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
 
 {
-    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:bar:55555\" }) }"
+    "query": "mutation { viberSendTextMessage(payload: { foo1: \"foo:1\" }) }"
 }
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
@@ -161,7 +161,7 @@ Authorization: Bearer -
 
 ###
 
-POST https://qyilcewitexjndalxkexol.online/graphql
+POST http://127.0.0.1:5000/graphql
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer -
