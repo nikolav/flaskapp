@@ -47,7 +47,6 @@ apt-get install -y \
     unattended-upgrades \
     git \
     jq \
-    make \
     nginx \
     build-essential \
     make \

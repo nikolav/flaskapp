@@ -2,6 +2,7 @@
 from sqlalchemy import text
 
 from src.graphql.setup import query
+from src.utils         import Utils
 
 
 @query.field('status')
@@ -9,6 +10,8 @@ def resolve_status(_o, _i):
   redis_version = None
   mongo_version = None
   db_version    = None
+
+  r = Utils.ResponseStatus()
 
   try:
     from flask_app import redis_client
@@ -29,14 +32,15 @@ def resolve_status(_o, _i):
             text("SELECT version();")
           ).scalar() if client_db else ''
 
-  except:
-    pass
+  except Exception as e:
+    r.error = e
 
-  return {
-    'status' : 'ok',
-    'redis'  : redis_version,
-    'mongo'  : mongo_version,
-    'db'     : db_version,
-  }
+  else:
+    r.status = {
+      'status' : 'ok',
+      'redis'  : redis_version,
+      'mongo'  : mongo_version,
+      'db'     : db_version,
+    }
 
-
+  return r.dump()
