@@ -7,7 +7,7 @@ from src.utils.discts import Dicts
 
 
 class Cache:
-  _err, client = redis_client if redis_client else (None, None,)
+  _err, client = redis_client if redis_client else (None, None)
 
   @staticmethod
   def key(token):
