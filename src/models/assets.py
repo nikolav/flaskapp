@@ -193,7 +193,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
     secondaryjoin  = id == ln_assets_assets.c.asset_l_id,
     back_populates = 'assets_has',
   )
-    
+
 
   # public
   def is_status(self, s):

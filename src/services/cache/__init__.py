@@ -7,11 +7,11 @@ from src.utils.discts import Dicts
 
 
 class Cache:
-  _err, client = redis_client
+  _err, client = redis_client if redis_client else (None, None,)
 
   @staticmethod
   def key(token):
-    return {} if not Cache.client.exists(token) else json.loads(Cache.client.get(token).decode())
+    return None if not Cache.client else {} if not Cache.client.exists(token) else json.loads(Cache.client.get(token).decode())
   
   @staticmethod
   def auth_profile(uid):
@@ -29,12 +29,13 @@ class Cache:
   
   @staticmethod
   def commit(token, *, patch = None, merge = True):
-    if patch:
-      if False != merge:
-        cache = Cache.key(token)
-        Dicts.merge(cache, patch)
+    if Cache.client:
+      if patch:
+        if False != merge:
+          cache = Cache.key(token)
+          Dicts.merge(cache, patch)
 
-      else:
-        cache = patch
+        else:
+          cache = patch
 
-      Cache.client.set(token, json.dumps(cache))
+        Cache.client.set(token, json.dumps(cache))
