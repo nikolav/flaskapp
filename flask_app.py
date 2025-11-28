@@ -23,17 +23,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO']                = not Config.PRODUCTION or Config.SQLALCHEMY_ECHO
 
 
-# services:redis
-redis_client = None
-if Config.REDIS_INIT:
-  from src.config.redis import redis_init
-  redis_client = redis_init(app)
-
 # db:mongo
 mongo = None
 if Config.MONGODB_INIT:
   from src.config.mongo import mongodb_init
   mongo = mongodb_init(app)
+
+# services:redis
+redis_client = None
+if Config.REDIS_INIT:
+  from src.config.redis import redis_init
+  redis_client = redis_init(app)
 
 # db:sql
 db = None
