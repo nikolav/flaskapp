@@ -53,6 +53,12 @@ if Config.DB_INIT:
 from src.config.io import socketio_setup
 io = socketio_setup(app)
 
+# services:aws
+aws_session = None
+if Config.AWS_SESSION_INIT:
+  from src.config.aws import aws_session_init
+  aws_session = aws_session_init(app)
+
 # services:cors
 from src.config.cors import cors_resources
 CORS(app, 
