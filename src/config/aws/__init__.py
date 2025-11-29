@@ -18,7 +18,7 @@ def aws_session_init(app):
       aws_session = boto3.Session(
         aws_access_key_id     = Config.AWS_ACCESS_KEY_ID,
         aws_secret_access_key = Config.AWS_SECRET_ACCESS_KEY,
-        region_name           = Config.AWS_REGION_NAME,
+        # region_name           = Config.AWS_REGION_NAME,
       )
 
     except Exception as err:
