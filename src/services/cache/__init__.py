@@ -11,7 +11,7 @@ class Cache:
 
   @staticmethod
   def key(token):
-    return None if not Cache.client else {} if not Cache.client.exists(token) else json.loads(Cache.client.get(token).decode())
+    return {} if not Cache.client else {} if not Cache.client.exists(token) else json.loads(Cache.client.get(token).decode())
   
   @staticmethod
   def auth_profile(uid):
