@@ -5,11 +5,12 @@
 # Improved Web Development Server Setup Script with Docker Support
 
 # --- Configuration Section ---
+USERNAME=$(whoami)
 WSERVER="./wserver.sh"
 VARS_PATH="./deploy-vars.sh"
 LOG_FILE="./server_setup.log"
 DOCKER_COMPOSE_VERSION="v2.27.0"  # Latest stable version
-USERNAME=$(whoami)
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 
 # --- Helper Functions ---
 log_message() {
@@ -33,24 +34,7 @@ apt-get upgrade -y | tee -a $LOG_FILE
 
 # Install essential tools
 log_message "Installing essential packages..."
-apt-get install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release \
-    software-properties-common \
-    apt-transport-https \
-    htop \
-    net-tools \
-    ufw \
-    fail2ban \
-    unattended-upgrades \
-    git \
-    jq \
-    nginx \
-    build-essential \
-    make \
-    python3-pip | tee -a $LOG_FILE
+apt-get install -y make build-essential autoconf automake libtool pkg-config cmake ninja-build uuid-dev unzip zip software-properties-common lsb-release apt-transport-https htop net-tools git curl wget ca-certificates libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev gnupg ufw unattended-upgrades | tee -a $LOG_FILE 
 
 # --- Docker Installation ---
 log_message "Installing Docker..."
@@ -60,7 +44,7 @@ apt-get remove -y docker docker-engine docker.io containerd runc | tee -a $LOG_F
 
 # Set up Docker repository
 mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker components
@@ -74,7 +58,6 @@ apt-get install -y \
 
 # Install specific docker-compose version
 log_message "Installing Docker Compose $DOCKER_COMPOSE_VERSION..."
-DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 mkdir -p $DOCKER_CONFIG/cli-plugins
 curl -SL "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o $DOCKER_CONFIG/cli-plugins/docker-compose
 chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
