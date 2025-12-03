@@ -1,15 +1,19 @@
 
 # Use official Python image with slim variant to reduce size
-FROM python:3.12.2
+FROM python:3.12-slim
 
-# Set work directory
-WORKDIR /home/app
+ARG PORT_DEFAULT=5000
 
 # Set environment variables
-ENV CHROME_BIN=/usr/bin/google-chrome \
+ENV \
+    PORT=${PORT_DEFAULT} \
+    CHROME_BIN=/usr/bin/google-chrome \
     CHROME_PATH=/usr/lib/chromium-browser/ \
     HEADLESS=true \
     CHROME_OPTS="--headless --disable-gpu --no-sandbox --disable-dev-shm-usage"
+
+# Set work directory
+WORKDIR /home/app
 
 # Install system dependencies for Chrome and clean up in one layer
 RUN apt-get update && \
@@ -43,7 +47,7 @@ COPY . .
 # USER appuser
 
 # Expose Flask port
-EXPOSE 5000
+EXPOSE ${PORT}
 
 ## Health check
 # HEALTHCHECK --interval=30s --timeout=3s \
@@ -51,4 +55,3 @@ EXPOSE 5000
 
 # Run app
 CMD ["./wserver.sh"]
-
