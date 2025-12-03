@@ -2,12 +2,8 @@
 # Use official Python image with slim variant to reduce size
 FROM python:3.12-slim
 
-# Build-time argments
-ARG PORT_DEFAULT=5000
-
 # Set environment variables
 ENV \
-    PORT=${PORT_DEFAULT} \
     CHROME_BIN=/usr/bin/google-chrome \
     CHROME_PATH=/usr/lib/chromium-browser/ \
     HEADLESS=true \
@@ -46,6 +42,12 @@ COPY . .
 ## Set non-root user for security
 # RUN useradd -m appuser && chown -R appuser:appuser /app
 # USER appuser
+
+# Build-time argments
+ARG PORT_DEFAULT=5000
+
+# default port
+ENV PORT=${PORT_DEFAULT}
 
 # Expose Flask port
 EXPOSE ${PORT}
