@@ -140,5 +140,3 @@ log_message "Server setup completed successfully. A log has been saved to $LOG_F
 log_message "Please restart your session or run 'newgrp docker' to apply Docker group changes"
 
 # exit 0
-
-
