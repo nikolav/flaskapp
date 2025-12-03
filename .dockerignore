@@ -1,0 +1,37 @@
+__pycache__/
+.coverage
+.DS_Store
+.eggs/
+# .env
+# .env.*
+.git/
+.gitignore
+.idea/
+.mypy_cache/
+.pytest_cache/
+.venv/
+.vscode/
+*.egg-info/
+*.key
+*.log
+*.out
+*.pem
+*.pyc
+*.pyd
+*.pyo
+*.so
+*.sqlite3
+*.swo
+*.swp
+*.tmp
+build/
+dist/
+docker-compose.yml
+Dockerfile
+env/
+htmlcov/
+node_modules/
+npm-debug.log
+tests/
+Thumbs.db
+venv/
