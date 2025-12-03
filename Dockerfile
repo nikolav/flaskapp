@@ -2,6 +2,7 @@
 # Use official Python image with slim variant to reduce size
 FROM python:3.12-slim
 
+# Build-time argments
 ARG PORT_DEFAULT=5000
 
 # Set environment variables
