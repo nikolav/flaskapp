@@ -28,5 +28,3 @@ def aws_session_init(app):
     
   
   return error, aws_session
-
-
