@@ -11,4 +11,4 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./storage:/home/app/storage
+      - ./storage:/usr/app/storage

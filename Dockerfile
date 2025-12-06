@@ -10,7 +10,7 @@ ENV \
     CHROME_OPTS="--headless --disable-gpu --no-sandbox --disable-dev-shm-usage"
 
 # Set work directory
-WORKDIR /home/app
+WORKDIR /usr/app
 
 # Install system dependencies for Chrome and clean up in one layer
 RUN apt-get update && \
@@ -38,6 +38,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copy application files
 COPY . .
+
+VOLUME ["./storage"]
 
 ## Set non-root user for security
 # RUN useradd -m appuser && chown -R appuser:appuser /app

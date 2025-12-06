@@ -36,8 +36,8 @@ class StorageS3(StorageBackend):
 
     else:
       r.status = {
-        'reponse': response,
-        'url'    : self.url(key),
+        'reponse' : response,
+        'url'     : self.url(key),
       }
     
     return r
