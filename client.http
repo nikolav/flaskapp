@@ -5,6 +5,16 @@ http://127.0.0.1:5000
 
 ###
 
+POST http://127.0.0.1:5000/webhook/foo
+Accept: application/json
+Content-Type: application/json
+
+{
+
+}
+
+###
+
 https://qyilcewitexjndalxkexol.online
 
 ###

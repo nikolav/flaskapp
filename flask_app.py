@@ -93,6 +93,10 @@ app.register_blueprint(bp_auth)
 from src.blueprints.webhook_viber_channel import bp_webhook_viber_channel
 app.register_blueprint(bp_webhook_viber_channel)
 
+# mount webhook endpoint for accepting arbitrary webhooks [POST @/webhook/<key>]
+from src.blueprints.webhook import bp_webhook
+app.register_blueprint(bp_webhook)
+
 # mount route:testing [@/testing]
 if not Config.PRODUCTION:
   from src.blueprints.testing import bp_testing
@@ -104,5 +108,4 @@ from src.middleware.auth import authenticate
 @app.before_request
 def handle_before_request():
   return authenticate()
-
 

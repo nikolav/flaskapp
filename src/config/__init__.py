@@ -71,6 +71,9 @@ class Config:
 
     # webhook:viber
     r'^/webhook_viber_channel/.*',
+
+    # webhook:any
+    r'^/webhook/.*',
   )
   
   # mail
