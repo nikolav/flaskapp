@@ -20,6 +20,7 @@ def status_ok():
   redis_version = None
   mongo_version = None
   db_version    = None
+  boto3_version = None
 
   try:
     _err_redis, client_redis = redis_client
@@ -40,6 +41,12 @@ def status_ok():
         ).scalar() if client_db else ''
   except:
     pass
+  
+  try:
+    import boto3, botocore
+    boto3_version = f'botocore@{botocore.__version__} boto3@{boto3.__version__}'
+  except:
+    pass
 
   return {
     'status'   : 'ok',
@@ -47,5 +54,6 @@ def status_ok():
     'db'       : db_version,
     'mongo'    : mongo_version,
     'redis'    : redis_version,
+    'boto3'    : boto3_version,
   }
 
