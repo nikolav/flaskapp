@@ -1,5 +1,5 @@
 
-print('@aws_session:init')
+print('@debug aws --session-init')
 
 initialized = False
 error       = None

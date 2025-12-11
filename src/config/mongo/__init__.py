@@ -4,13 +4,11 @@ from flask_pymongo import PyMongo
 from src.config import Config
 
 
-print('@mongodb:init')
-
+print('@debug mongodb --init')
 
 initialized = False
-
-client = None
-error  = None
+error       = None
+client      = None
 
 def mongodb_init(app):
   global client

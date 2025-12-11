@@ -3,4 +3,4 @@
 
 
 
-print('@debug db:tables_init')
+print('@debug sqldb --tables-init')

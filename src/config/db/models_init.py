@@ -1,6 +1,9 @@
 
 from src.config import Config
 
+
+print('@debug sqldb --models-init')
+
 def models_init(db):
     _err, cli = db
 

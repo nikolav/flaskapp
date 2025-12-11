@@ -1,13 +1,13 @@
 from flask_redis import FlaskRedis
 
+from src.config  import Config
 
-print('@redis:init')
 
+print('@debug redis --init')
 
 initialized = False
-
-client = None
-error  = None
+error       = None
+client      = None
 
 def redis_init(app):
   global client
@@ -15,6 +15,7 @@ def redis_init(app):
   global initialized
 
   if not initialized:  
+    app.config['REDIS_URL'] = Config.REDIS_URL
 
     try:
       client = FlaskRedis()

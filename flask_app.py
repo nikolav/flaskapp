@@ -1,4 +1,3 @@
-
 import os
 
 from flask          import Flask
@@ -15,13 +14,6 @@ app = Flask(__name__,
             )
 
 app.config['SECRET_KEY'] = Config.SECRET_KEY
-
-app.config['REDIS_URL'] = Config.REDIS_URL
-
-app.config['SQLALCHEMY_DATABASE_URI']        = Config.DATABASE_URI_production if Config.PRODUCTION else Config.DATABASE_URI_development
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO']                = not Config.PRODUCTION or Config.SQLALCHEMY_ECHO
-
 
 # db:mongo
 mongo = None
