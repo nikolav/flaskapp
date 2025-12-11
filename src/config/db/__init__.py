@@ -26,7 +26,6 @@ def sqldb_init(app):
       print('@debug --db:init')
   
   initialized = True
-  
-  return error, cli
 
+  return error, cli
 
