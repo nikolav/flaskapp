@@ -10,16 +10,17 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.services.cache import Cache
-  from src.utils          import Utils
+  from src.models.docs import Docs
+  from src.utils       import Utils
+  from src.schemas.serialization import SchemaSerializeDocs
 
-  r     = Utils.ResponseStatus()
-  token = 'foo:1'
+  r = Utils.ResponseStatus()
 
   try:
-    r.status = { token: Cache.key(token) }
+    d = Docs.by_key('foo:1')
+    r.status = { 'doc': SchemaSerializeDocs().dump(d) }
 
   except Exception as e:
     r.error = e
-
+  
   return r.dump()
