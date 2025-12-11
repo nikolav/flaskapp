@@ -5,6 +5,8 @@ from flask_socketio import SocketIO
 from src.config import Config
 
 
+print('@debug io --init')
+
 initialized = False
 error       = None
 io          = None
@@ -19,7 +21,7 @@ def socketio_setup(app):
       io = SocketIO(app, 
               cors_allowed_origins      = Config.IO_CORS_ALLOW_ORIGINS if Config.PRODUCTION else '*', 
               cors_supports_credentials = True,
-          )
+            )
           
     except Exception as e:
       error = e
@@ -29,7 +31,7 @@ def socketio_setup(app):
       # io status check
       @io.on('connect')
       def io_connected():
-        print('@connection:io')
+        print('@debug io --connection')
     
     initialized = True
   
