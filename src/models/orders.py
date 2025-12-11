@@ -17,6 +17,7 @@ from src.utils.mixins import MixinByIds
 from src.utils.mixins import MixinExistsID
 from src.utils.mixins import MixinFieldMergeable
 from src.utils.mixins import MixinManageTagsOnOrders
+from src.utils.mixins import MixinReprSimple
 
 from . import db
 from . import assetsTable
@@ -38,7 +39,7 @@ class OrdersTags(Enum):
   TAG_ORDERS_SHAREABLE_GLOBALY = 'TAG_ORDERS_SHAREABLE_GLOBALY:61cde3f6-cdf8-5769-bf11-93b91f4ff49d'
 
 
-class Orders(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinExistsID, MixinFieldMergeable, MixinManageTagsOnOrders, _dbcli.Model):
+class Orders(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinExistsID, MixinFieldMergeable, MixinManageTagsOnOrders, MixinReprSimple, _dbcli.Model):
   __tablename__ = ordersTable
 
   # ID

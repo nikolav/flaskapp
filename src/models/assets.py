@@ -27,6 +27,7 @@ from src.utils.mixins import MixinFieldMergeable
 from src.utils.mixins import MixinIncludesTags
 from src.utils.mixins import MixinByIdsAndType
 from src.utils.mixins import MixinManageTagsOnAssets
+from src.utils.mixins import MixinReprSimple
 
 from src.models.docs  import Docs
 from src.models.docs  import Tags
@@ -133,7 +134,7 @@ class AssetsIOEvents(Enum):
   # IOEVENT_ASSETS_FORMS_SUBMISSION_prefix      = 'IOEVENT_ASSETS_FORMS_SUBMISSION:kLctvwLigtUAaHzTD:'
 
 
-class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, MixinExistsID, MixinFieldMergeable, MixinManageTagsOnAssets, _dbcli.Model):
+class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, MixinExistsID, MixinFieldMergeable, MixinManageTagsOnAssets, MixinReprSimple, _dbcli.Model):
   __tablename__ = assetsTable
 
   # ID

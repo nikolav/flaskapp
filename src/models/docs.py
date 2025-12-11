@@ -24,6 +24,7 @@ from src.utils.mixins import MixinExistsID
 from src.utils.mixins import MixinFieldMergeable
 from src.utils.mixins import MixinByIds
 from src.utils.mixins import MixinManageTagsOnDocs
+from src.utils.mixins import MixinReprSimple
 
 from src.schemas.serialization import SchemaSerializeDocs
 
@@ -35,7 +36,7 @@ _schemaDocsDumpMany = SchemaSerializeDocs(many = True)
 
 
 # https://docs.sqlalchemy.org/en/20/tutorial/metadata.html#declaring-mapped-classes
-class Docs(MixinTimestamps, MixinExistsID, MixinByIds, MixinFieldMergeable, MixinManageTagsOnDocs, _dbcli.Model):
+class Docs(MixinTimestamps, MixinExistsID, MixinByIds, MixinFieldMergeable, MixinManageTagsOnDocs, MixinReprSimple, _dbcli.Model):
   __tablename__ = docsTable
 
   id   : Mapped[int]           = mapped_column(primary_key = True)
@@ -47,13 +48,7 @@ class Docs(MixinTimestamps, MixinExistsID, MixinByIds, MixinFieldMergeable, Mixi
   
   # virtual
   tags  : Mapped[List['Tags']] = relationship(secondary = ln_docs_tags, back_populates = 'docs')
-  asset : Mapped['Assets']     = relationship(back_populates = 'docs')
-
-  
-  # magic
-  def __repr__(self):
-    return f'Docs({json.dumps(self.dump())})'
-  
+  asset : Mapped['Assets']     = relationship(back_populates = 'docs')  
 
   # public
   def get_data(self, updates = None):

@@ -119,3 +119,9 @@ class MixinManageTagsOnDocs(MixinManageTagsBase):
   FIELD = 'docs'
 
 
+class MixinReprSimple:
+  '''simple repr in format: <ClassName id=123>'''
+  def __repr__(self):
+    cls = self.__class__.__name__
+    ID  = getattr(self, 'id', None)
+    return f'<{cls} id={ID}>'
