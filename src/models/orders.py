@@ -39,6 +39,15 @@ class OrdersTags(Enum):
   TAG_ORDERS_SHAREABLE_GLOBALY = 'TAG_ORDERS_SHAREABLE_GLOBALY:61cde3f6-cdf8-5769-bf11-93b91f4ff49d'
 
 
+class OrdersStatus(Enum):
+  ACTIVE    = "ACTIVE:494fe821-1910-5bb5-8a82-af57697341f6"     # currently being processed
+  CANCELED  = "CANCELED:78d0e3bf-f5d2-5971-8e36-5b03e0a57dce"   # canceled by user/system
+  DONE      = "DONE:189d735b-88ce-57f9-93c9-ab24f50569bb"       # successfully completed
+  FAILED    = "FAILED:919125b5-d0cf-5b3b-8045-47260fd4fbf9"     # processing failed
+  ON_HOLD   = "ON_HOLD:d46faaa3-28a6-5cfb-95d1-b973288eb086"    # temporarily paused
+  PENDING   = "PENDING:44f16d28-04f4-5aee-b68c-4a0c6240549f"    # order created, awaiting processing
+
+
 class Orders(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinExistsID, MixinFieldMergeable, MixinManageTagsOnOrders, MixinReprSimple, _dbcli.Model):
   __tablename__ = ordersTable
 
@@ -49,7 +58,7 @@ class Orders(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinExistsID, Mixi
   key    : Mapped[Optional[str]] = mapped_column(default = uuid)
   status : Mapped[Optional[str]]
   data   : Mapped[Optional[dict]] = mapped_column(JSON)
-  notes  : Mapped[Optional[str]]
+  # notes  : Mapped[Optional[str]]
   
   # .sid related asset:site
   asset_id = mapped_column(_dbcli.ForeignKey(f'{assetsTable}.id'))
