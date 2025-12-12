@@ -10,12 +10,8 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.services.cache import Cache
-  # from src.utils import Utils
-  from flask import request
+  from src.models.nodes          import Nodes
+  from src.schemas.serialization import SchemaSerializeNodes
+  
+  return SchemaSerializeNodes(many = True, exclude = ('parent', 'children',)).dump(Nodes.lsa())
 
-  d = request.get_json()
-
-  Cache.commit('foo:1', PATCH = d)
-
-  return Cache.key('foo:1')

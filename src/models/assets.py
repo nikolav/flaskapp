@@ -138,7 +138,15 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   data: Mapped[dict] = mapped_column(JSON, default = dict)
   # tree
   #  foreign, self-referential
-  parent_id = mapped_column(_dbcli.ForeignKey(f'{assetsTable}.id', ondelete = 'SET NULL'), index = True, nullable = True)
+  parent_id = mapped_column(
+      _dbcli.ForeignKey(
+          f'{assetsTable}.id', 
+          # ondelete = 'SET NULL', # @parent:delete set child.parent_id=NULL
+          ondelete = 'CASCADE',    # @parent:delete auto delete child nodes
+        ), 
+      index    = True, 
+      nullable = True,
+    )
 
   # virtual
   #  Additional tags or keywords related to the asset for easier categorization or searchability

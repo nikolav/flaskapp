@@ -54,12 +54,12 @@ class SchemaSerializeAssets(SchemaSerializeTimes):
   # virtal
   tags          = fields.List(fields.String())
   docs          = fields.List(fields.Nested(SchemaSerializeDocs()))
-  # assets_has    = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
-  # assets_belong = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
-  # asset_orders  = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
-  # orders        = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
-  # parent        = fields.Nested(lambda: SchemaSerializeAssets(), allow_none = True)
-  # children      = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
+  # assets_has    = fields.List(fields.Nested('SchemaSerializeAssets'))
+  # assets_belong = fields.List(fields.Nested('SchemaSerializeAssets'))
+  # asset_orders  = fields.List(fields.Nested('SchemaSerializeAssets'))
+  # orders        = fields.List(fields.Nested('SchemaSerializeAssets'))
+  # parent        = fields.Nested('SchemaSerializeAssets', exclude = ('parent', 'children',), allow_none = True)
+  # children      = fields.List(fields.Nested('SchemaSerializeAssets'), exclude = ('parent', 'children',))
 
 
 class SchemaSerializeOrders(SchemaSerializeTimes):
@@ -121,7 +121,6 @@ class SchemaSerializeNodes(SchemaSerializeTimes):
 
   # virtual
   tags     = fields.List(fields.String())
-  parent   = fields.Nested(lambda: SchemaSerializeNodes(), allow_none = True)
-  children = fields.List(fields.Nested(lambda: SchemaSerializeNodes()))
-
+  parent   = fields.Nested('SchemaSerializeNodes', exclude = ('parent', 'children',), allow_none = True)
+  children = fields.List(fields.Nested('SchemaSerializeNodes', exclude = ('parent', 'children',)))
 

@@ -36,7 +36,15 @@ class Nodes(MixinTimestamps, MixinByIds, MixinExistsID, MixinFieldMergeable, Mix
   data : Mapped[dict] = mapped_column(JSON, default = dict)
 
   # foreign, self-referential
-  parent_id = mapped_column(_db.ForeignKey(f'{nodesTable}.id', ondelete = 'SET NULL'), index = True, nullable = True)
+  parent_id = mapped_column(
+      _db.ForeignKey(
+          f'{nodesTable}.id', 
+          # ondelete = 'SET NULL',
+          ondelete = 'CASCADE',
+        ), 
+      index    = True, 
+      nullable = True,
+    )
 
   # virtual
   tags     : Mapped[List['Tags']]      = relationship(secondary = ln_nodes_tags, back_populates = 'nodes')
@@ -53,6 +61,11 @@ class Nodes(MixinTimestamps, MixinByIds, MixinExistsID, MixinFieldMergeable, Mix
   
   def dump(self, *args, **kwargs):
     return SchemaSerializeNodes(*args, **kwargs).dump(self)
+
+  
+  @staticmethod
+  def lsa():
+    return _db.session.scalars(_db.select(Nodes))
 
 
 # extra index
