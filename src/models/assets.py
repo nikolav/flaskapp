@@ -5,6 +5,7 @@ from enum     import Enum
 from uuid     import uuid4 as uuid
 
 from sqlalchemy     import JSON
+from sqlalchemy     import Index
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
@@ -36,6 +37,7 @@ from src.config       import Config
 from src.utils.unique import Unique
 
 from src.schemas.serialization import SchemaSerializeAssetsTextSearch
+from src.schemas.serialization import SchemaSerializeAssets
 
 
 _err, _dbcli = db
@@ -134,6 +136,9 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   notes: Mapped[Optional[str]]
   # additional data
   data: Mapped[dict] = mapped_column(JSON, default = dict)
+  # tree
+  #  foreign, self-referential
+  parent_id = mapped_column(_dbcli.ForeignKey(f'{assetsTable}.id', ondelete = 'SET NULL'), index = True, nullable = True)
 
   # virtual
   #  Additional tags or keywords related to the asset for easier categorization or searchability
@@ -169,6 +174,18 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
     secondaryjoin  = id == ln_assets_assets.c.asset_l_id,
     back_populates = 'assets_has',
   )
+  
+  # tree:virtual
+  parent   : Mapped[Optional['Assets']] = relationship(remote_side = 'Assets.id', back_populates = 'children')
+  children : Mapped[List['Assets']]     = relationship(cascade = 'all, delete-orphan', back_populates = 'parent',
+    single_parent   = True,   # helps enforce delete-orphan rules
+    passive_deletes = True,   # works well with ondelete behavior
+  )
+  
+
+  # public
+  def dump(self, *args, **kwargs):
+    return SchemaSerializeAssets(*args, **kwargs).dump(self)
 
 
   # public
@@ -389,7 +406,13 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
       ))
 
 
+# extra index
+Index('ix_assets_parent_id_id', Assets.parent_id, Assets.id)
 
+
+
+###
+###
 
 # When designing a database table for managing general company assets, you'll want to include fields that capture essential details about each asset. Here’s a basic outline of fields you might include:
 

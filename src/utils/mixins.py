@@ -30,8 +30,7 @@ class MixinExistsID():
         func.count(cls.id)
       ).where(
         cls.id == id
-      )
-    )
+      ).limit(1))
 
 
 class MixinByIds():
@@ -125,3 +124,5 @@ class MixinReprSimple:
     cls = self.__class__.__name__
     ID  = getattr(self, 'id', None)
     return f'<{cls} id={ID}>'
+
+

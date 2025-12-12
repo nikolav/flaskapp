@@ -15,6 +15,7 @@ from . import tagsTable
 from . import ln_docs_tags
 from . import ln_assets_tags
 from . import ln_orders_tags
+from . import ln_nodes_tags
 
 
 
@@ -33,6 +34,7 @@ class Tags(_dbcli.Model):
   docs   : Mapped[List['Docs']]   = relationship(secondary = ln_docs_tags,   back_populates = 'tags')
   assets : Mapped[List['Assets']] = relationship(secondary = ln_assets_tags, back_populates = 'tags')
   orders : Mapped[List['Orders']] = relationship(secondary = ln_orders_tags, back_populates = 'tags')  
+  nodes  : Mapped[List['Nodes']]  = relationship(secondary = ln_nodes_tags,  back_populates = 'tags')
 
   # magic
   def __str__(self):

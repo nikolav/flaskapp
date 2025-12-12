@@ -47,6 +47,9 @@ class SchemaSerializeAssets(SchemaSerializeTimes):
   location  = fields.String()
   notes     = fields.String()
   data      = fields.Dict()
+
+  # foreign
+  parent_id = fields.Integer()
   
   # virtal
   tags          = fields.List(fields.String())
@@ -55,6 +58,8 @@ class SchemaSerializeAssets(SchemaSerializeTimes):
   # assets_belong = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
   # asset_orders  = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
   # orders        = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
+  # parent        = fields.Nested(lambda: SchemaSerializeAssets(), allow_none = True)
+  # children      = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
 
 
 class SchemaSerializeOrders(SchemaSerializeTimes):
@@ -104,4 +109,19 @@ class SchemaMongoDoc(Schema):
 
 class SchemaMongoDocData(SchemaMongoDoc, SchemaSerializeTimes):
   data = fields.Dict()
+
+
+class SchemaSerializeNodes(SchemaSerializeTimes):
+  id   = fields.Integer()
+  key  = fields.String()
+  data = fields.Dict()
+
+  # foreign
+  parent_id = fields.Integer(allow_none = True)
+
+  # virtual
+  tags     = fields.List(fields.String())
+  parent   = fields.Nested(lambda: SchemaSerializeNodes(), allow_none = True)
+  children = fields.List(fields.Nested(lambda: SchemaSerializeNodes()))
+
 

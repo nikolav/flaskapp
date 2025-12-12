@@ -5,18 +5,19 @@ from src.config import Config
 print('@debug sqldb --models-init')
 
 def models_init(db):
-    _err, cli = db
+    _err, _db = db
 
     from src.models.docs   import Docs
     from src.models.tags   import Tags
     from src.models.assets import Assets
     from src.models.orders import Orders
+    from src.models.nodes  import Nodes
 
     # drop/create schema
     if Config.REBUILD_SCHEMA:
-      cli.drop_all()
+      _db.drop_all()
     
     # create schema
-    cli.create_all()
+    _db.create_all()
 
 
