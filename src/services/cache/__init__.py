@@ -61,3 +61,9 @@ class Cache:
     Cache.client.set(token, payload)
 
     return True
+
+  @staticmethod
+  def ls(*, MATCH = '*', COUNT = 1000):
+    # keys are bytes if FlaskRedis was initialized without 'decode_responses=True'
+    return map(lambda key: key.decode('utf-8'), Cache.client.scan_iter(match = MATCH, count = COUNT))
+
