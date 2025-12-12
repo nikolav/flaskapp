@@ -43,22 +43,28 @@ _err, _dbcli = db
 class AssetsType(Enum):
   # DIGITAL = "Digital Asset"
   #  communicate announcements; users can not comment in channels
-  DIGITAL_CHANNEL = 'DIGITAL_CHANNEL:YqmefT'
+  DIGITAL_CHANNEL = 'DIGITAL_CHANNEL:6bb1861d-6a37-523d-b1c6-380b70276399'
   #  custom commnication for users
-  DIGITAL_CHAT = 'DIGITAL_CHAT:4nASbEj8pFvqm'
-  DIGITAL_FORM = 'DIGITAL_FORM:TzZJs5PZqcWc'
+  DIGITAL_CHAT = 'DIGITAL_CHAT:af404bde-866b-5bea-a74f-727602b07e44'
+  DIGITAL_FORM = 'DIGITAL_FORM:15129173-e84f-51aa-95bd-d901d680a4f8'
   DIGITAL_POST = 'DIGITAL_POST:6b9959a1-a82c-54a6-b7b2-dbeb285f23d7'
   # all users access
-  DIGITAL_CHANNEL_GLOBAL = 'DIGITAL_CHANNEL_GLOBAL:tQ6c5O1mRDtP6fDCCj'
-  DIGITAL_CHAT_GLOBAL    = 'DIGITAL_CHAT_GLOBAL:JS4nzSghZq4CZH'
-  DIGITAL_FORM_GLOBAL    = 'DIGITAL_FORM_GLOBAL:DKp32J'
+  DIGITAL_CHANNEL_GLOBAL = 'DIGITAL_CHANNEL_GLOBAL:e0e302b3-9eb4-5ad1-8cec-916efde64959'
+  DIGITAL_CHAT_GLOBAL    = 'DIGITAL_CHAT_GLOBAL:8847adfa-a587-50e2-82cb-27b24da1a46a'
+  DIGITAL_FORM_GLOBAL    = 'DIGITAL_FORM_GLOBAL:b184cec0-8219-59b7-bf73-c1127d90f70c'
+
+  # USERS = "People Asset"
+  USER = 'USER:14788048-c336-5876-a128-a1061477710c'
+
+  # POLICIES/ROLES = "Permissions Asset"
+  POLICY = 'POLICY:b3102980-27cd-5355-8776-6545cd080270'
 
   # GROUP = "Group Asset"
-  PEOPLE_GROUP_TEAM = 'PEOPLE_GROUP_TEAM:sEdkj9r'
+  PEOPLE_GROUP_TEAM = 'PEOPLE_GROUP_TEAM:31f64628-707d-573d-9f86-54cfcc6ca06c'
 
   # PHYSICAL = "Physical Asset"
-  PHYSICAL_PRODUCT           = 'PHYSICAL_PRODUCT:u1zDoNxQnYLnHHbp'
-  PHYSICAL_STORE             = 'PHYSICAL_STORE:5btoy9I8IKgT0RJO'
+  PHYSICAL_PRODUCT           = 'PHYSICAL_PRODUCT:1fd4ec23-572e-519e-b5dd-ccf4b3c26288'
+  PHYSICAL_STORE             = 'PHYSICAL_STORE:17b2325f-87b4-5b77-aa51-00c1de4b2726'
   PHYSICAL_DISTRIBUTION_UNIT = 'PHYSICAL_DISTRIBUTION_UNIT:3e854289-02e2-5aa8-85ec-e9d1fc021ea7'
 
   # DIGITAL_TASKS
@@ -67,40 +73,7 @@ class AssetsType(Enum):
   # FINANCIAL = "Financial Asset"
 
   # ISSUES
-  ISSUE_GENERAL = 'ISSUE_GENERAL:x53CJbY'
-
-# class AssetsDigitalFormFieldTypes(Enum):
-#   # asset.data
-#   #   {
-#   #     fields: [
-#   #       {
-#   #         data { question, description, required:bool, multiple:bool },
-#   #         items: string[],
-#   #         key,
-#   #         type
-#   #       },
-#   #     ]
-#   #   }
-  
-#   # @choice: 
-#   #   .question .description? .required .items: { title:string; value: any; }[] .multiple?
-#   CHOICE  = 'DIGITAL_FORM:CHOICE:hrNoq9hhbh2wUyZ9fjmf'
-#   # @text
-#   #   .question .description? .required
-#   TEXT    = 'DIGITAL_FORM:TEXT:54QNKF'
-#   # @boolean
-#   #   .question .description? .required
-#   BOOLEAN = 'DIGITAL_FORM:BOOLEAN:P1cUlYS4'
-#   # @rating
-#   #   .question .description? .required
-#   RATING  = 'DIGITAL_FORM:RATING:C6zX66WEWk'
-#   # @files
-#   #   .question .description? .required
-#   FILES   = 'DIGITAL_FORM:FILES:KBr3gZuJAM4s'
-#   # @table, fill table data
-#   TABLE_DATA = 'DIGITAL_FORM:TABLE_DATA:GOOGLE_SHEETS:1lbH5rK'
-#   # @goog.forms, complete google form
-#   GOOGLE_FORMS = 'DIGITAL_FORM:GOOGLE_FORMS:NWso2XvdHbLlCIW4Q9'
+  ISSUE_GENERAL = 'ISSUE_GENERAL:e280d49d-243f-59de-a970-6e63159aff9b'
 
 
 class AssetsStatus(Enum):
@@ -117,11 +90,11 @@ class AssetsStatus(Enum):
 
 
 class AssetsCondition(Enum):
-  BAD            = 'BAD:oKRchSYlnm8lMqcqoq'
-  DEPRECATED     = 'DEPRECATED:stuDFLe7AQf4eKr0RVIn'
   GOOD           = 'GOOD:xW3qMs2e94T9S'
-  NEEDS_REPAIR   = 'NEEDS_REPAIR:NJGJD8Spq9A2aFrQgas'
+  BAD            = 'BAD:oKRchSYlnm8lMqcqoq'
   OUT_OF_SERVICE = 'OUT_OF_SERVICE:KpJUn2IqM2oj'
+  DEPRECATED     = 'DEPRECATED:stuDFLe7AQf4eKr0RVIn'
+  NEEDS_REPAIR   = 'NEEDS_REPAIR:NJGJD8Spq9A2aFrQgas'
 
 
 class AssetsIOEvents(Enum):
