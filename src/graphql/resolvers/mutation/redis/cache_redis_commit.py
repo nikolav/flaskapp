@@ -13,8 +13,8 @@ def resolve_cacheRedisCommit(_obj, _info, cache_key, patch = None, merge = True)
   changes = 0
 
   try:
-    Cache.commit(cache_key, PATCH = patch, MERGE = merge)
-    changes += 1
+    if Cache.commit(cache_key, PATCH = patch, MERGE = merge):
+      changes += 1
 
   except Exception as e:
     r.error = e

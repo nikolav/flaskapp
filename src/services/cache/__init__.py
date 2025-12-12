@@ -40,7 +40,7 @@ class Cache:
   def auth_profile_patch(uid, *, patch, merge = True):
     if patch and uid:
       token = f'{Config.AUTH_PROFILE}{uid}'
-      Cache.commit(token, PATCH = patch, MERGE = merge)
+      return Cache.commit(token, PATCH = patch, MERGE = merge)
   
   @staticmethod
   def cloud_messaging_tokens(uid):
@@ -48,27 +48,17 @@ class Cache:
   
   @staticmethod
   def commit(token, *, PATCH = None, MERGE = True):
-    r = Utils.ResponseStatus()
+    if not Cache.client or not PATCH:
+      raise Exception('@Cache:invalid')
 
-    try:
-      if not Cache.client or not PATCH:
-        raise Exception('@Cache:invalid')
-
-      if MERGE:
-        cache = Cache.key(token)
-        Dicts.merge(cache, PATCH)
-      else:
-        cache = PATCH
-
-      payload = json.dumps(cache, ensure_ascii = False)
-
-      Cache.client.set(token, payload)
-
-    except Exception as e:
-      r.error = e
-
+    if MERGE:
+      cache = Cache.key(token)
+      Dicts.merge(cache, PATCH)
     else:
-      r.status = True
-    
-    return r
+      cache = PATCH
 
+    payload = json.dumps(cache, ensure_ascii = False)
+
+    Cache.client.set(token, payload)
+
+    return True
