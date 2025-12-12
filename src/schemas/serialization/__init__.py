@@ -24,8 +24,8 @@ class SchemaSerializeAssetsTextSearch(Schema):
   key        = fields.String()
   code       = fields.String()
   name       = fields.String()
-  # location   = fields.String()
-  # notes      = fields.String()
+  location   = fields.String()
+  notes      = fields.String()
   tags       = fields.Method('tags_joined')
   data_dumps = fields.Method('resolve_data_dumps')
   
@@ -44,8 +44,8 @@ class SchemaSerializeAssets(SchemaSerializeTimes):
   type      = fields.String()
   status    = fields.String()
   condition = fields.String()
-  # location  = fields.String()
-  # notes     = fields.String()
+  location  = fields.String()
+  notes     = fields.String()
   data      = fields.Dict()
   
   # virtal
@@ -62,7 +62,7 @@ class SchemaSerializeOrders(SchemaSerializeTimes):
   key    = fields.String()
   status = fields.String()
   data   = fields.Dict()
-  # notes  = fields.String()
+  notes  = fields.String()
 
   # foreign key
   asset_id = fields.Integer()

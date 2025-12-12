@@ -58,7 +58,7 @@ class Orders(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinExistsID, Mixi
   key    : Mapped[Optional[str]] = mapped_column(default = uuid)
   status : Mapped[Optional[str]]
   data   : Mapped[Optional[dict]] = mapped_column(JSON)
-  # notes  : Mapped[Optional[str]]
+  notes  : Mapped[Optional[str]]
   
   # .sid related asset:site
   asset_id = mapped_column(_dbcli.ForeignKey(f'{assetsTable}.id'))

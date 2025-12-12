@@ -128,13 +128,10 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   status: Mapped[Optional[str]]
   # Condition of the asset (e.g., "New", "Good", "Needs Repair")
   condition: Mapped[Optional[str]]
-
   # Physical or digital location of the asset (e.g., "Warehouse 1", "Cloud Server")
-  # location: Mapped[Optional[str]]
-
+  location: Mapped[Optional[str]]
   # Detailed description of the asset
-  # notes: Mapped[Optional[str]]
-
+  notes: Mapped[Optional[str]]
   # additional data
   data: Mapped[dict] = mapped_column(JSON, default = dict)
 
