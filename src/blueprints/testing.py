@@ -11,15 +11,24 @@ CORS(bp_testing)
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
   from src.utils         import Utils
-  from src.models.tags   import Tags
+  from src.models.assets import Assets
+  from src.models.assets import AssetsType
+  from flask_app import db
+  from src.schemas.serialization import SchemaSerializeAssets
 
   r = Utils.ResponseStatus()
   a = None
 
   try:
-    r.status = Tags.exits('foo:3')
-
+    _err, _db = db
+    a = Assets(name = Assets.codegen(), type = AssetsType.PHYSICAL_PRODUCT.value)
+    _db.session.add(a)
+    _db.session.commit()
+    
   except Exception as e:
     r.error = e
+  
+  else:
+    r.status = { 'asset': SchemaSerializeAssets().dump(a) }
   
   return r.dump()

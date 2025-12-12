@@ -340,7 +340,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
 
   
   @staticmethod
-  def codegen(*, length = 10, prefix = 'Assets:'):
+  def codegen(*, length = 11, prefix = 'Assets:'):
     return f'{prefix}{Unique.id(length = length)}'
 
   
