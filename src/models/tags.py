@@ -2,6 +2,7 @@
 from typing import List
 from typing import Optional
 
+from sqlalchemy     import exists
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
@@ -39,6 +40,7 @@ class Tags(_dbcli.Model):
   def __repr__(self):
     return f'<Tags id={self.id} tag={self.tag}>'
 
+
   @staticmethod
   def by_name(tag_name, *, CREATE = False, COMMIT = True):
     tag = None
@@ -62,3 +64,14 @@ class Tags(_dbcli.Model):
       raise e
         
     return tag
+  
+
+  @staticmethod
+  def exits(tag_name):
+    return _dbcli.session.scalar(
+      _dbcli.select(
+        exists().where(
+          Tags.tag == tag_name
+        )
+      ))
+
