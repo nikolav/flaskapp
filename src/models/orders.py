@@ -52,12 +52,11 @@ class Orders(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinExistsID, Mixi
   notes  : Mapped[Optional[str]]
   
   # .sid related asset:site
-  site_id = mapped_column(_dbcli.ForeignKey(f'{assetsTable}.id'))
+  asset_id = mapped_column(_dbcli.ForeignKey(f'{assetsTable}.id'))
 
   # virtual
   # related asset:site
-  site     : Mapped['Assets']       = relationship(back_populates = 'site_orders')
+  asset    : Mapped['Assets']       = relationship(back_populates = 'asset_orders')
   tags     : Mapped[List['Tags']]   = relationship(secondary = ln_orders_tags,     back_populates = 'orders')
   products : Mapped[List['Assets']] = relationship(secondary = ln_orders_products, back_populates = 'orders')
-  
 

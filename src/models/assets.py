@@ -165,9 +165,9 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   tags: Mapped[List['Tags']] = relationship(secondary = ln_assets_tags, back_populates = 'assets')
   #  addtional related records
   docs: Mapped[List['Docs']] = relationship(back_populates = 'asset')
-  #  related site orders
-  site_orders: Mapped[List['Orders']] = relationship(back_populates = 'site')
-  # related assetSites:orders
+  #  related asset/site orders; orders this entity has
+  asset_orders: Mapped[List['Orders']] = relationship(back_populates = 'asset')
+  # related orders@tbl-orders-items this entity belongs to
   orders: Mapped[List['Orders']] = relationship(secondary = ln_orders_products, back_populates = 'products')
 
   # self-referential, has|belongs-to assets
