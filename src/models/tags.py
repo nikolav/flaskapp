@@ -3,6 +3,8 @@ from typing import List
 from typing import Optional
 
 from sqlalchemy     import exists
+from sqlalchemy     import func
+from sqlalchemy     import distinct
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
@@ -67,11 +69,23 @@ class Tags(_dbcli.Model):
   
 
   @staticmethod
-  def exits(tag_name):
-    return _dbcli.session.scalar(
-      _dbcli.select(
-        exists().where(
-          Tags.tag == tag_name
-        )
-      ))
+  def exits(*tag_names, ALL = True):
+    if not tag_names:
+      return True if ALL else False
+    
+    if not ALL:
+      return _dbcli.session.scalar(
+        _dbcli.select(
+          exists().where(
+            Tags.tag.in_(tag_names)
+          )
+        ))
+    
+    # compare numbers of passed:uniq tags and matched tags:distinct in table:tags
+    return len(set(tag_names)) == (_dbcli.session.scalar(
+        _dbcli.select(
+          func.count(distinct(Tags.tag))
+        ).where(
+          Tags.tag.in_(tag_names))
+      ) or 0)
 

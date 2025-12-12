@@ -17,7 +17,7 @@ def resolve_route_testing():
   a = None
 
   try:
-    r.status = Tags.exits('foo:1')
+    r.status = Tags.exits('foo:3')
 
   except Exception as e:
     r.error = e
