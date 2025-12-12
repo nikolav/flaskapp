@@ -14,8 +14,6 @@ from src.utils.mixins import MixinByIds
 from src.utils.mixins import MixinExistsID
 from src.utils.mixins import MixinFieldMergeable
 from src.utils.mixins import MixinIncludesTags
-# from src.utils.mixins import MixinByIdsAndType
-# from src.utils.mixins import MixinManageTagsOnAssets
 from src.utils.mixins import MixinReprSimple
 
 from src.schemas.serialization import SchemaSerializeNodes
@@ -31,7 +29,7 @@ _err, _db = db
 class Nodes(MixinTimestamps, MixinByIds, MixinExistsID, MixinFieldMergeable, MixinIncludesTags, MixinReprSimple, _db.Model):
   __tablename__ = nodesTable
 
-  id   : Mapped[int]  = mapped_column(primary_key=True)
+  id   : Mapped[int]  = mapped_column(primary_key = True)
   key  : Mapped[str]  = mapped_column(default = lambda: str(uuid()))
   data : Mapped[dict] = mapped_column(JSON, default = dict)
 
