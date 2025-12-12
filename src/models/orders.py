@@ -65,7 +65,7 @@ class Orders(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinExistsID, Mixi
 
   # virtual
   # related asset:site
-  asset : Mapped['Assets']       = relationship(back_populates = 'asset_orders')
   tags  : Mapped[List['Tags']]   = relationship(secondary = ln_orders_tags,  back_populates = 'orders')
+  asset : Mapped['Assets']       = relationship(back_populates = 'asset_orders')
   items : Mapped[List['Assets']] = relationship(secondary = ln_orders_items, back_populates = 'orders')
 

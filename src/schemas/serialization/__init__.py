@@ -21,11 +21,11 @@ class SchemaSerializeDocs(SchemaSerializeTimes):
 
 
 class SchemaSerializeAssetsTextSearch(Schema):
-  name       = fields.String()
+  key        = fields.String()
   code       = fields.String()
+  name       = fields.String()
   # location   = fields.String()
   # notes      = fields.String()
-  key        = fields.String()
   tags       = fields.Method('tags_joined')
   data_dumps = fields.Method('resolve_data_dumps')
   
@@ -38,21 +38,23 @@ class SchemaSerializeAssetsTextSearch(Schema):
 
 class SchemaSerializeAssets(SchemaSerializeTimes):
   id        = fields.Integer()
-  name      = fields.String()
-  code      = fields.String()
   key       = fields.String()
+  code      = fields.String()
+  name      = fields.String()
   type      = fields.String()
-  # location  = fields.String()
   status    = fields.String()
   condition = fields.String()
-  data      = fields.Dict()
+  # location  = fields.String()
   # notes     = fields.String()
-  author_id = fields.Integer()
+  data      = fields.Dict()
   
   # virtal
-  tags       = fields.List(fields.String())
-  docs       = fields.List(fields.Nested(SchemaSerializeDocs()))
-  assets_has = fields.List(fields.Nested(lambda: SchemaSerializeAssets(exclude = ('assets_has',))))
+  tags          = fields.List(fields.String())
+  docs          = fields.List(fields.Nested(SchemaSerializeDocs()))
+  # assets_has    = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
+  # assets_belong = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
+  # asset_orders  = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
+  # orders        = fields.List(fields.Nested(lambda: SchemaSerializeAssets()))
 
 
 class SchemaSerializeOrders(SchemaSerializeTimes):
@@ -63,12 +65,12 @@ class SchemaSerializeOrders(SchemaSerializeTimes):
   # notes  = fields.String()
 
   # foreign key
-  site_id   = fields.Integer()
+  asset_id = fields.Integer()
   
   # virtal
-  site     = fields.Nested(SchemaSerializeAssets(exclude = ('assets_has',)))
-  tags     = fields.List(fields.String())
-  products = fields.List(fields.Nested(SchemaSerializeAssets(exclude = ('assets_has',))))
+  tags  = fields.List(fields.String())
+  asset = fields.Nested(SchemaSerializeAssets())
+  items = fields.List(fields.Nested(SchemaSerializeAssets()))
 
 
 class ObjectIdField(fields.Field):
