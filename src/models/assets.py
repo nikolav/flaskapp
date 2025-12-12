@@ -288,6 +288,11 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   
 
   @staticmethod
+  def lsa():
+    return _dbcli.session.scalars(_dbcli.select(Assets))
+  
+
+  @staticmethod
   def assets_parents(*lsa, PtAIDS = None, TYPE = None, DISTINCT = True):
     '''
       list provided node's parent assets; that contain provided nodes;

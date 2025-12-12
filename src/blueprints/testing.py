@@ -10,8 +10,17 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.models.nodes          import Nodes
-  from src.schemas.serialization import SchemaSerializeNodes
+  from src.models.assets          import Assets
+  from src.schemas.serialization import SchemaSerializeAssets
+  from flask_app import db
+
+
+  _err, _db = db
   
-  return SchemaSerializeNodes(many = True, exclude = ('parent', 'children',)).dump(Nodes.lsa())
+  a = _db.session.get(Assets, 4)
+
+  _db.session.delete(a)
+  _db.session.commit()
+
+  return SchemaSerializeAssets(many = True).dump(Assets.lsa())
 
