@@ -3,7 +3,6 @@ import json
 
 from flask_app        import redis_client
 from src.config       import Config
-from src.utils        import Utils
 from src.utils.discts import Dicts
 
 
