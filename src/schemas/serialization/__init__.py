@@ -23,8 +23,8 @@ class SchemaSerializeDocs(SchemaSerializeTimes):
 class SchemaSerializeAssetsTextSearch(Schema):
   name       = fields.String()
   code       = fields.String()
-  location   = fields.String()
-  notes      = fields.String()
+  # location   = fields.String()
+  # notes      = fields.String()
   key        = fields.String()
   tags       = fields.Method('tags_joined')
   data_dumps = fields.Method('resolve_data_dumps')
@@ -40,13 +40,13 @@ class SchemaSerializeAssets(SchemaSerializeTimes):
   id        = fields.Integer()
   name      = fields.String()
   code      = fields.String()
+  key       = fields.String()
   type      = fields.String()
-  location  = fields.String()
+  # location  = fields.String()
   status    = fields.String()
   condition = fields.String()
   data      = fields.Dict()
-  notes     = fields.String()
-  key       = fields.String()
+  # notes     = fields.String()
   author_id = fields.Integer()
   
   # virtal
@@ -60,7 +60,7 @@ class SchemaSerializeOrders(SchemaSerializeTimes):
   key    = fields.String()
   status = fields.String()
   data   = fields.Dict()
-  notes  = fields.String()
+  # notes  = fields.String()
 
   # foreign key
   site_id   = fields.Integer()

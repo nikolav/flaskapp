@@ -10,16 +10,26 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.models.docs import Docs
-  from src.utils       import Utils
+  from src.models.assets import Assets
+  from src.models.assets import AssetsType
+  from src.utils         import Utils
+  from flask_app         import db
+  from src.utils.unique  import Unique
+  from src.schemas.serialization import SchemaSerializeAssets
 
   r = Utils.ResponseStatus()
+  a = None
 
   try:
-    d = Docs.by_key('foo:1')
-    r.status = { 'doc': d.dump() }
+    _err, _dbcli = db
+    a = Assets(name = f'A:{Unique.id()}', type = AssetsType.PHYSICAL_PRODUCT.value)
+    _dbcli.session.add(a)
+    _dbcli.session.commit()
 
   except Exception as e:
     r.error = e
+  
+  else:
+    r.status = { 'asset': SchemaSerializeAssets(exclude = ('assets_has',)).dump(a) }
   
   return r.dump()
