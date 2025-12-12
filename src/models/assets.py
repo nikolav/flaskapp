@@ -229,7 +229,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
       c_tag = f'{Config.CATEGORY_KEY_ASSETS_prefix}{c_key}'
       if c_tag != self.category_key():
         self.category_key_drop(_commit = _commit)
-        c = Tags.by_name(c_tag, create = True, _commit = _commit)
+        c = Tags.by_name(c_tag, CREATE = True, COMMIT = _commit)
         c.assets.append(self)
         
         if _commit:

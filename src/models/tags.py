@@ -40,7 +40,7 @@ class Tags(_dbcli.Model):
     return f'<Tags id={self.id} tag={self.tag}>'
 
   @staticmethod
-  def by_name(tag_name, *, create = False, _commit = True):
+  def by_name(tag_name, *, CREATE = False, COMMIT = True):
     tag = None
 
     try:
@@ -52,10 +52,10 @@ class Tags(_dbcli.Model):
         ))
       
       if not tag:
-        if True == create:
+        if True == CREATE:
           tag = Tags(tag = tag_name)
           _dbcli.session.add(tag)
-          if _commit:
+          if COMMIT:
             _dbcli.session.commit()
 
     except Exception as e:

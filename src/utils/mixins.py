@@ -82,7 +82,7 @@ class MixinManageTagsBase():
     changes = 0
 
     for tname in filter(lambda p: not self.includes_tags(p), tags):
-      tp = Tags.by_name(tname, create = True, _commit = _commit)
+      tp = Tags.by_name(tname, CREATE = True, COMMIT = _commit)
       getattr(tp, self.FIELD).append(self)
       changes += 1
     
@@ -97,7 +97,7 @@ class MixinManageTagsBase():
     changes = 0
 
     for tname in filter(lambda p: self.includes_tags(p), tags):
-      tp = Tags.by_name(tname, create = True, _commit = _commit)
+      tp = Tags.by_name(tname, CREATE = True, COMMIT = _commit)
       getattr(tp, self.FIELD).remove(self)
       changes += 1
     
