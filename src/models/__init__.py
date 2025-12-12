@@ -19,7 +19,7 @@ ordersTable = f'orders{tblSuffix}'
 lnTableDocsTags       = f'ln_docs_tags{tblSuffix}'
 lnTableAssetsTags     = f'ln_assets_tags{tblSuffix}'
 lnTableOrdersTags     = f'ln_orders_tags{tblSuffix}'
-lnTableOrdersProducts = f'ln_orders_products{tblSuffix}'
+lnTableOrdersItems    = f'ln_orders_items{tblSuffix}'
 lnTableAssetsAssets   = f'ln_assets_assets{tblSuffix}'
 
 # tables --ln
@@ -41,11 +41,11 @@ ln_orders_tags = _dbcli.Table(
   _dbcli.Column('tag_id',   _dbcli.ForeignKey(f'{tagsTable}.id'),   primary_key = True),
 )
 
-ln_orders_products = _dbcli.Table(
-  lnTableOrdersProducts,
-  _dbcli.Column('order_id',   _dbcli.ForeignKey(f'{ordersTable}.id'), primary_key = True),
-  _dbcli.Column('product_id', _dbcli.ForeignKey(f'{assetsTable}.id'), primary_key = True),
-  _dbcli.Column('amount',     _dbcli.Integer, nullable = False, default = 0),
+ln_orders_items = _dbcli.Table(
+  lnTableOrdersItems,
+  _dbcli.Column('order_id', _dbcli.ForeignKey(f'{ordersTable}.id'), primary_key = True),
+  _dbcli.Column('item_id',  _dbcli.ForeignKey(f'{assetsTable}.id'), primary_key = True),
+  _dbcli.Column('amount',   _dbcli.Integer, nullable = False, default = 0),
 )
 
 ln_assets_assets = _dbcli.Table(

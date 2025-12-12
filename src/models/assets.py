@@ -18,7 +18,7 @@ from flask_app import db
 from . import assetsTable
 from . import ln_assets_tags
 from . import ln_assets_assets
-from . import ln_orders_products
+from . import ln_orders_items
 
 from src.utils.mixins import MixinTimestamps
 from src.utils.mixins import MixinByIds
@@ -48,10 +48,13 @@ class AssetsType(Enum):
   DIGITAL_CHAT = 'DIGITAL_CHAT:af404bde-866b-5bea-a74f-727602b07e44'
   DIGITAL_FORM = 'DIGITAL_FORM:15129173-e84f-51aa-95bd-d901d680a4f8'
   DIGITAL_POST = 'DIGITAL_POST:6b9959a1-a82c-54a6-b7b2-dbeb285f23d7'
-  # all users access
+  #  all users access
   DIGITAL_CHANNEL_GLOBAL = 'DIGITAL_CHANNEL_GLOBAL:e0e302b3-9eb4-5ad1-8cec-916efde64959'
   DIGITAL_CHAT_GLOBAL    = 'DIGITAL_CHAT_GLOBAL:8847adfa-a587-50e2-82cb-27b24da1a46a'
   DIGITAL_FORM_GLOBAL    = 'DIGITAL_FORM_GLOBAL:b184cec0-8219-59b7-bf73-c1127d90f70c'
+  #  tasks/todos
+  DIGITAL_TASKS = 'DIGITAL_TASKS:5373aab3-2b75-5b19-abcb-419fbf2ffd6f'
+  DIGITAL_TODOS = 'DIGITAL_TODOS:3edd1395-91e2-58fd-b6ca-da625749841f'
 
   # USERS = "People Asset"
   USER = 'USER:14788048-c336-5876-a128-a1061477710c'
@@ -67,8 +70,6 @@ class AssetsType(Enum):
   PHYSICAL_STORE             = 'PHYSICAL_STORE:17b2325f-87b4-5b77-aa51-00c1de4b2726'
   PHYSICAL_DISTRIBUTION_UNIT = 'PHYSICAL_DISTRIBUTION_UNIT:3e854289-02e2-5aa8-85ec-e9d1fc021ea7'
 
-  # DIGITAL_TASKS
-  DIGITAL_TASKS = 'DIGITAL_TASKS:5373aab3-2b75-5b19-abcb-419fbf2ffd6f'
   
   # FINANCIAL = "Financial Asset"
 
@@ -83,6 +84,7 @@ class AssetsStatus(Enum):
   CLOSED    = 'CLOSED:bGbGsEnAk2xu9sye7'
   DONE      = 'DONE:6jRIWy6fWT3mT3uNuF2'
   INACTIVE  = 'INACTIVE:fdHJBPHGyC'
+  OPENED    = 'OPENED:I5YvY7U2cnBRnV'
   PENDING   = 'PENDING:P4kOFE3HF'
 
   POSTS_BLOCKED = 'POSTS_BLOCKED:UcAMV'
@@ -114,12 +116,12 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   id: Mapped[int] = mapped_column(primary_key = True)
 
   # fields
-  # Descriptive name for the asset (e.g., "Laptop", "Office Space")
-  name: Mapped[str]
+  # search key:unique
+  key: Mapped[str] = mapped_column(default = lambda: str(uuid()))
   # Identifier.unique for an asset
   code: Mapped[Optional[str]] = mapped_column(unique = True)
-  # search key:unique
-  key: Mapped[Optional[str]] = mapped_column(default = uuid)
+  # Descriptive name for the asset (e.g., "Laptop", "Office Space")
+  name: Mapped[str]
   # The category of the asset (e.g., "Physical", "Digital", "Financial")
   type: Mapped[Optional[str]]
   # Indicates the current status (e.g., "Active", "Disposed", "Maintenance", "Sold")
@@ -134,7 +136,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   # notes: Mapped[Optional[str]]
 
   # additional data
-  data: Mapped[Optional[dict]] = mapped_column(JSON)
+  data: Mapped[dict] = mapped_column(JSON, default = dict)
 
   # virtual
   #  Additional tags or keywords related to the asset for easier categorization or searchability
@@ -144,7 +146,7 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   #  related asset/site orders; orders this entity has
   asset_orders: Mapped[List['Orders']] = relationship(back_populates = 'asset')
   # related orders@tbl-orders-items this entity belongs to
-  orders: Mapped[List['Orders']] = relationship(secondary = ln_orders_products, back_populates = 'products')
+  orders: Mapped[List['Orders']] = relationship(secondary = ln_orders_items, back_populates = 'items')
 
   # self-referential, has|belongs-to assets
   # assets_has: Mapped[List['Assets']] = relationship(
@@ -191,9 +193,10 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   #  join parent assets
   def assets_join(self, *lsa):
     changes = 0
-    for a in filter(lambda a_: a_ not in self.assets_belong, lsa):
-      self.assets_belong.append(a)
-      changes += 1
+    for parent in lsa:
+      if parent not in self.assets_belong:
+        self.assets_belong.append(parent)
+        changes += 1
 
     return changes
   
@@ -202,9 +205,10 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   #  leave parent assets
   def assets_leave(self, *lsa):
     changes = 0
-    for a in filter(lambda a_: a_ in self.assets_belong, lsa):
-      self.assets_belong.remove(a)
-      changes += 1
+    for parent in lsa:
+      if parent in self.assets_belong:
+        self.assets_belong.remove(parent)
+        changes += 1
 
     return changes
     
