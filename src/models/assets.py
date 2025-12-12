@@ -122,18 +122,17 @@ class Assets(MixinTimestamps, MixinIncludesTags, MixinByIds, MixinByIdsAndType, 
   key: Mapped[Optional[str]] = mapped_column(default = uuid)
   # The category of the asset (e.g., "Physical", "Digital", "Financial")
   type: Mapped[Optional[str]]
-
-  # Physical or digital location of the asset (e.g., "Warehouse 1", "Cloud Server")
-  # location: Mapped[Optional[str]]
-
   # Indicates the current status (e.g., "Active", "Disposed", "Maintenance", "Sold")
   status: Mapped[Optional[str]]
   # Condition of the asset (e.g., "New", "Good", "Needs Repair")
   condition: Mapped[Optional[str]]
 
+  # Physical or digital location of the asset (e.g., "Warehouse 1", "Cloud Server")
+  # location: Mapped[Optional[str]]
+
   # Detailed description of the asset
   # notes: Mapped[Optional[str]]
-  
+
   # additional data
   data: Mapped[Optional[dict]] = mapped_column(JSON)
 
