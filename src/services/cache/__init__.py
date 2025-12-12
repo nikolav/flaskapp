@@ -11,29 +11,32 @@ class Cache:
 
   @staticmethod
   def key(token, *, DEFAULT_FACTORY = dict):
-    raw  = None
-    data = None
-
-    if not Cache.client:
-      return DEFAULT_FACTORY()
-    
-    raw = Cache.client.get(token)
-    if not raw:
-      return DEFAULT_FACTORY()
-    
-    if isinstance(raw, (bytes, bytearray)):
-      raw = raw.decode('utf-8', errors = 'replace')
+    rdata = None
+    data  = None
     
     try:
-      data = json.loads(raw)
-    except Exception:
-      return DEFAULT_FACTORY()
+      rdata = Cache.client.get(token)
+      if isinstance(rdata, (bytes, bytearray)):
+        rdata = rdata.decode('utf-8', errors = 'replace')
+      
+      data = json.loads(rdata)
 
-    return data if isinstance(data, dict) else DEFAULT_FACTORY()
+      if not isinstance(data, dict):
+        raise
+    
+    except:
+      pass
+    
+    else:
+      return data
+    
+    return DEFAULT_FACTORY()
   
+
   @staticmethod
   def auth_profile(uid):
     return Cache.key(f'{Config.AUTH_PROFILE}{uid}')
+  
   
   @staticmethod
   def auth_profile_patch(uid, *, patch, merge = True):
@@ -41,9 +44,11 @@ class Cache:
       token = f'{Config.AUTH_PROFILE}{uid}'
       return Cache.commit(token, PATCH = patch, MERGE = merge)
   
+  
   @staticmethod
   def cloud_messaging_tokens(uid):
     return Cache.auth_profile(uid).get(Config.CLOUD_MESSAGING_TOKENS)
+  
   
   @staticmethod
   def commit(token, *, PATCH = None, MERGE = True):
@@ -62,8 +67,10 @@ class Cache:
 
     return True
 
+
   @staticmethod
   def ls(*, MATCH = '*', COUNT = 1000):
     # keys are bytes if FlaskRedis was initialized without 'decode_responses=True'
     return map(lambda key: key.decode('utf-8'), Cache.client.scan_iter(match = MATCH, count = COUNT))
+
 

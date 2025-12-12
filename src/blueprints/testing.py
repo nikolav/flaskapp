@@ -12,4 +12,4 @@ CORS(bp_testing)
 def resolve_route_testing():
   from src.services.cache import Cache
 
-  return Cache.key('foo:1')
+  return Cache.key('bar:1')
