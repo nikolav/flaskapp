@@ -31,7 +31,7 @@ class CloudMessaging:
 
 
   @staticmethod
-  def send(*, payload, tokens = None):
+  def messages_send(*, payload, tokens = None):
     if tokens is None:
       # load this user tokens
       tokens = CloudMessaging.user_tokens()
