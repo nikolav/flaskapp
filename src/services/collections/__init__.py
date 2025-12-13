@@ -81,10 +81,10 @@ class Collections:
   
   @staticmethod
   def count_all(collection_name):
-    return Collections.count(collection_name, {})
+    return Collections.count(collection_name)
 
 
   @staticmethod
-  def count(collection_name, q, **kwargs):
+  def count(collection_name, q = {}, **kwargs):
     return Collections.client.db[collection_name].count_documents(q, **kwargs)
 
