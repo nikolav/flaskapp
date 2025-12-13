@@ -49,15 +49,17 @@ class Collections:
         oid   = Collections.toID(raw_id)
         q     = { '_id': oid }
         merge = patch.get('merge', True)
-        res   = None
-
-        if not merge:
-          # shallow merge without '$set': Dicts.dotted(dd)
-          res = col.update_one(q, { '$set': dd, '$currentDate': { 'updated_at': True } }, upsert = False)
-        else:
-          # deep merge with dotted '$set:...'
-          res = col.update_one(q, { '$set': Dicts.dotted(dd), '$currentDate': { 'updated_at': True } }, upsert = False)
-
+        
+        # shallow merge without '$set': Dicts.dotted(dd)
+        # deep merge with dotted '$set:...'
+        res = col.update_one(q, 
+            { 
+              '$set': Dicts.dotted(dd) if merge else dd, 
+              '$currentDate': { 'updated_at': True } 
+            }, 
+            upsert = False,
+          )
+        
         # if query:q didn't match, insert
         if 0 == res.matched_count:
           col.insert_one(with_doc_timestamps(dd))
