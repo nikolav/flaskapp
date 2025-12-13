@@ -78,11 +78,6 @@ class Collections:
     
     return countd
   
-  
-  @staticmethod
-  def count_all(collection_name):
-    return Collections.count(collection_name)
-
 
   @staticmethod
   def count(collection_name, q = {}, **kwargs):
