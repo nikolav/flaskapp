@@ -10,5 +10,5 @@ services:
     #   - redis
     env_file:
       - ./.env
-    volumes:
-      - ./storage:/usr/app/storage
+    # volumes:
+    #   - ./storage:/usr/app/storage
