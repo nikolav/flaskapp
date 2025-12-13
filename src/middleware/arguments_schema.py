@@ -2,26 +2,25 @@
 from functools import wraps
 
 from flask import request
-from flask import g
-from flask import abort
 from flask import make_response
+from flask import g
 
-from marshmallow.exceptions import ValidationError as MVError
+from marshmallow.exceptions import ValidationError
 
 
 def arguments_schema(schema_validate):
-  def arguments_schema_validate(fn_wrapped):
-    @wraps(fn_wrapped)
+  def decorated(fn):
+    @wraps(fn)
     def wrapper(*args, **kwargs):
-      error     = '@error/internal.500'
-      status    = 500
-      arguments = None
+      error  = '@error:arguments_schema'
+      status = 500
+      data   = None
 
       try:
         # validate/load request data
-        arguments = schema_validate.load(request.get_json())
+        data = schema_validate.load(request.get_json())
 
-      except MVError as err:
+      except ValidationError as err:
         # @400
         error  = err
         status = 400
@@ -33,10 +32,12 @@ def arguments_schema(schema_validate):
       else:
         # @200
         # set global `.arguments` to parsed input; run next
-        g.arguments = arguments
-        return fn_wrapped(*args, **kwargs)
+        g.arguments = data
+        return fn(*args, **kwargs)
       
-      # abort, send error
-      return abort(make_response({ 'error': str(error) }, status))
+      # send error
+      return make_response({ 'error': str(error) }, status)
+
     return wrapper
-  return arguments_schema_validate
+
+  return decorated
