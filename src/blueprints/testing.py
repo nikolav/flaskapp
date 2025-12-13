@@ -10,6 +10,7 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.services.cache import Cache
+  from src.services.collections import Collections
 
-  return Cache.key('bar:1')
+  return Collections.dump(Collections.ls('main'), many = True)
+

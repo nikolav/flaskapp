@@ -30,3 +30,15 @@ class Dicts:
       dpath.delete(node, path)
     except PathNotFound:
       pass
+
+  @staticmethod
+  def dotted(d, prefix = ''):
+    res = {}
+    for k, v in (d or {}).items():
+      path = f'{prefix}.{k}' if prefix else k
+      if isinstance(v, dict):
+        res.update(Dicts.dotted(v, path))
+      else:
+        res[path] = v
+    return res
+

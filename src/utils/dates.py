@@ -15,12 +15,10 @@ DATE_FORMATS = {
 def utcnow():
   return datetime.now(timezone.utc)
 
-def with_doc_timestamps(doc, *, 
-    field_created_at = 'created_at', 
-    field_updated_at = 'updated_at'):
+def with_doc_timestamps(doc, *, CREATED_AT = 'created_at', UPDATED_AT = 'updated_at'):
   tt = utcnow()
-  doc.setdefault(field_created_at, tt)
-  doc[field_updated_at] = tt
+  doc.setdefault(CREATED_AT, tt)
+  doc[UPDATED_AT] = tt
   return doc
 
 def to_utc(dt: datetime):

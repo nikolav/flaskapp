@@ -16,7 +16,7 @@ def resolve_collectionsDocsDrop(_obj, _info, topic, ids):
     if not topic or not ids:
       raise Exception('collections:docs:drop input invalid')
     
-    changes  = Collections.rm(topic, ids = ids)
+    changes  = Collections.rm(topic, *ids)
     r.status = changes
 
   except Exception as e:

@@ -1,100 +1,89 @@
 
-from bson import json_util
 from bson import ObjectId
 
-from flask_app import mongo
-from src.utils.dates import with_doc_timestamps
-from src.utils.merge_strategies import dict_deepmerger_extend_lists as merger
+from flask_app        import mongo
+from src.utils.dates  import with_doc_timestamps
+from src.utils.discts import Dicts
+
+from src.schemas.serialization import SchemaMongoDocData
 
 
 class Collections:
   _err, client = mongo
 
-  @staticmethod
-  def ls(collection_name, q):
-    coll = Collections.client.db[collection_name]
-    return coll.find(q)
 
   @staticmethod
-  def lsa(collection_name):
-    return Collections.client.db[collection_name].find({}) if Collections.exists(collection_name) else []
-  
+  def ls(collection_name, q = {}):
+    return Collections.client.db[collection_name].find(q)
+    
+    
   @staticmethod
-  def json(doc):
-    return json_util.loads(json_util.dumps(doc))
+  def dump(dd, *args, **kwargs):
+    # serialize( <doc | doc[]>dd )
+    return SchemaMongoDocData(*args, **kwargs).dump(dd)
   
-  @staticmethod
-  def dump_doc(doc):
-    # whole doc to extended JSON dict
-    d = Collections.json(doc)
-    oid = d.pop('_id', None)
-    d['id'] = str(oid) if isinstance(oid, ObjectId) else oid['$oid'] if (isinstance(oid, dict) and ('$oid' in oid)) else oid
-    return d
-  
-  @staticmethod
-  def exists(collection_name):
-    return collection_name in Collections.client.db.list_collection_names() if collection_name else False
   
   @staticmethod
   def toID(id):
     return ObjectId(id) if (isinstance(id, str) and ObjectId.is_valid(id)) else id
   
-  @staticmethod
-  def id_exists(collection_name, id):
-    col = Collections.client.db[collection_name]
-    return None != col.find_one({ '_id': Collections.toID(id) }, { '_id': 1 })
-  
+
   @staticmethod
   def commit(collection_name, *, patches):
-    # patches: { merge?: boolean; data: dict }[]
+    # patches: { merge?: boolean; data: {'id'?: ID, 'data': dict} }[]
     changes = 0
     
     if patches:
       col = Collections.client.db[collection_name]
+
       for patch in patches:
-        dd = patch['data']
-        if not (('id' in dd) and Collections.id_exists(collection_name, dd['id'])):
-          # create
-          if 'id' in dd:
-            del dd['id']
+        dd     = dict(patch.get('data') or {})
+        raw_id = dd.pop('id', None)
+        
+        # create when no id provided
+        if not raw_id:
           col.insert_one(with_doc_timestamps(dd))
+          changes += 1
+          continue
 
+        oid   = Collections.toID(raw_id)
+        q     = { '_id': oid }
+        merge = patch.get('merge', True)
+        res   = None
+
+        if not merge:
+          # shallow merge without '$set': Dicts.dotted(dd)
+          res = col.update_one(q, { '$set': dd, '$currentDate': { 'updated_at': True } }, upsert = False)
         else:
-          # id-exists, update
+          # deep merge with dotted '$set:...'
+          res = col.update_one(q, { '$set': Dicts.dotted(dd), '$currentDate': { 'updated_at': True } }, upsert = False)
 
-          oid = Collections.toID(dd.pop('id', None))
-          q   = { '_id': oid }
-          
-          # replace
-          if False == patch.get('merge', None):
-            col.find_one_and_replace(q, with_doc_timestamps(dd))
-            
-          # patch
-          else:
-            dp = Collections.json(col.find_one(q))
-            del dp['_id']
-            merger.merge(dp, dd)
-            col.find_one_and_update(q, { '$set': with_doc_timestamps(dp) })
-
+        # if query:q didn't match, insert
+        if 0 == res.matched_count:
+          col.insert_one(with_doc_timestamps(dd))
+        
         changes += 1
 
     return changes
   
+  
   @staticmethod
-  def rm(collection_name, *, ids):
-    col = Collections.client.db[collection_name]
-    res = col.delete_many({ '_id': { '$in': [Collections.toID(id) for id in ids] } })
-    return res.deleted_count
+  def rm(collection_name, *ids):
+    countd = 0
+    if ids:
+      col    = Collections.client.db[collection_name]
+      res    = col.delete_many({ '_id': { '$in': [Collections.toID(id) for id in ids] } })
+      countd = res.deleted_count
+    
+    return countd
+  
   
   @staticmethod
   def count_all(collection_name):
-    col = Collections.client.db[collection_name]
-    return col.estimated_document_count()
+    return Collections.count(collection_name, {})
+
 
   @staticmethod
   def count(collection_name, q, **kwargs):
-    coll = Collections.client.db[collection_name]
-    return coll.count_documents(q, **kwargs)
-
-
+    return Collections.client.db[collection_name].count_documents(q, **kwargs)
 

@@ -11,7 +11,7 @@ def resolve_collectionsDocsByTopic(_obj, _info, topic, config = None):
   r = Utils.ResponseStatus()
 
   try:
-    r.status = SchemaMongoDocData(many = True).dump(Collections.lsa(topic)) if topic else []
+    r.status = Collections.dump(Collections.ls(topic), many = True) if topic else []
 
   except Exception as e:
     r.error = e
