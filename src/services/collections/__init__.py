@@ -50,10 +50,9 @@ class Collections:
         q     = { '_id': oid }
         merge = patch.get('merge', True)
         
-        # shallow merge without '$set': Dicts.dotted(dd)
-        # deep merge with dotted '$set:...'
         res = col.update_one(q, 
             { 
+              # deep merge | shallow merge
               '$set': Dicts.dotted(dd) if merge else dd, 
               '$currentDate': { 'updated_at': True } 
             }, 

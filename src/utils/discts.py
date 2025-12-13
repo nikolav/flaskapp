@@ -33,12 +33,12 @@ class Dicts:
 
   @staticmethod
   def dotted(d, prefix = ''):
-    res = {}
+    dd = {}
     for k, v in (d or {}).items():
       path = f'{prefix}.{k}' if prefix else k
       if isinstance(v, dict):
-        res.update(Dicts.dotted(v, path))
+        dd.update(Dicts.dotted(v, path))
       else:
-        res[path] = v
-    return res
+        dd[path] = v
+    return dd
 
