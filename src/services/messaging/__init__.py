@@ -5,7 +5,7 @@ from flask          import g
 from src.services.cache import Cache
 
 
-class CloudMessaging():
+class CloudMessaging:
   
   @staticmethod
   def tokens():
