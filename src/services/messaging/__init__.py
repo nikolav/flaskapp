@@ -40,4 +40,32 @@ class CloudMessaging:
                   data  = payload,
                   token = token, 
                 ) for token in tokens])
+  
+
+  @staticmethod
+  def send(*, PAYLOAD, TOKENS = None, IMAGE = None, SILENT = False):
+    if SILENT:
+      return CloudMessaging.messages_send(payload = PAYLOAD, tokens = TOKENS)
+    else:
+      return CloudMessaging.notifications_send(payload = PAYLOAD, tokens = TOKENS, image = IMAGE)
+  
+  
+  @staticmethod
+  def topics_subscribe(subscriptions):
+    # subscriptions: { [topic: string]: Token[] | None }
+    pass
+
+  
+  @staticmethod
+  def topics_unsubscribe(unsubscriptions):
+    # unsubscriptions: { [topic: string]: Token[] | None }
+    pass
+
+  
+  @staticmethod
+  def topics_publish(payloads, *, SILENT = False):
+    # payloads : { [topic: string]: payload:dict }; 
+    # SILENT?  : bool
+    pass
+
 

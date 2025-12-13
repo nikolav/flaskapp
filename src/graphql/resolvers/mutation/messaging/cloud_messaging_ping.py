@@ -17,8 +17,10 @@ def resolve_cloudMessagingPing(_obj, _info,
   res = None
 
   try:
-    res = CloudMessaging.notifications_send(
-      payload = SchemaValidateCloudMessagingMessage(unknown = EXCLUDE).load(payload))
+    res = CloudMessaging.send(
+        PAYLOAD = SchemaValidateCloudMessagingMessage(unknown = EXCLUDE).load(payload),
+        SILENT  = False,
+      )
 
   except Exception as e:
     r.error = e
