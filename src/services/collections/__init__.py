@@ -3,7 +3,7 @@ from bson import ObjectId
 
 from flask_app        import mongo
 from src.utils.dates  import with_doc_timestamps
-from src.utils.discts import Dicts
+from src.utils.dicts  import Dicts
 
 from src.schemas.serialization import SchemaMongoDocData
 
