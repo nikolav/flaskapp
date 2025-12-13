@@ -1,6 +1,7 @@
 
 from functools import wraps
 
+from flask         import g
 from graphql.error import GraphQLError
 from marshmallow   import ValidationError
 
@@ -10,10 +11,10 @@ def gql_arguments_schema(schema):
     @wraps(fn)
     def wrapper(obj, info, **kwargs):
       print('@debug --gql_arguments_schema')
-      data = kwargs
+      data = {}
       
       try:
-        data = schema.load(data)
+        data = schema.load(kwargs)
       
       except ValidationError as e:
         raise GraphQLError(
@@ -23,7 +24,8 @@ def gql_arguments_schema(schema):
             'fields' : e.messages,
           })
 
-      return fn(obj, info, **data)
+      g.arguments = data
+      return fn(obj, info, **kwargs)
     
     return wrapper
   
