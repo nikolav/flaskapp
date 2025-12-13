@@ -69,3 +69,15 @@ class CloudMessaging:
     pass
 
 
+  @staticmethod
+  def response_send_successful(resp):
+    '''
+    Returns True if at least one SendResponse succeeded.
+    Safe even if counters are missing or inconsistent.
+    '''
+    if not resp or not getattr(resp, 'responses', None):
+      return False
+
+    return any(r.success for r in resp.responses)
+
+

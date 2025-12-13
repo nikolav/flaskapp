@@ -10,7 +10,12 @@ CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('POST',))
 def resolve_route_testing():
-  from src.services.collections import Collections
+  from src.services.messaging import CloudMessaging
 
-  return Collections.dump(Collections.ls('main'), many = True)
+  res = CloudMessaging.send(
+      PAYLOAD = { 'title': 'title:foo2', 'body': 'message:foo2' },
+      SILENT  = True,
+    )
+  
+  return { 'res': CloudMessaging.response_send_successful(res) }
 
