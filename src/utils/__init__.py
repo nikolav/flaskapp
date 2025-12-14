@@ -1,8 +1,11 @@
 
 import json
+from uuid import uuid4 as uuid
 
 from marshmallow import fields
 from marshmallow import Schema
+
+from src.config import Config
 
 
 class _SchemaResponseStatus(Schema):
@@ -29,5 +32,19 @@ class Utils:
     
     def __repr__(self):
       return json.dumps(self.dump())
+  
+
+  @staticmethod
+  def file_extension(filename):
+    if not filename or '.' not in filename:
+        return ''
+    ext = filename.rsplit('.', 1)[-1].lower()
+    # keep it simple; optionally validate allowed extensions
+    return f'.{ext}'
+  
+  
+  @staticmethod
+  def aws_key_random(filename):
+    return f'{Config.AWS_UPLOAD_S3_PREFIX.rstrip('/')}/{uuid().hex}{Utils.file_extension(filename)}'
 
 

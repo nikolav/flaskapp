@@ -100,10 +100,13 @@ class Config:
   AWS_REGION_NAME       = os.getenv('AWS_REGION_NAME')
   
   # uploads
+  AWS_UPLOAD_S3_BUCKET        = os.getenv('AWS_UPLOAD_S3_BUCKET')
+  AWS_UPLOAD_S3_PREFIX        = os.getenv('AWS_UPLOAD_S3_PREFIX')
+  UPLOADS_MAX_FILENAME_LENGTH = 1024
   UPLOADS_ALLOW_CONTENT_TYPES = {
     # ── Images ─────────────────────────────
-    'image/jpg',
     'image/jpeg',
+    'image/jpg',
     'image/png',
     'image/webp',
     'image/gif',

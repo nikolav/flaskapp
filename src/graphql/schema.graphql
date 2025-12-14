@@ -18,6 +18,9 @@ type Query {
 
   # collections
   collectionsDocsByTopic(topic: String!, config: JsonData): JsonData!
+
+  # aws-upload
+  awsUploadPresignedUrl(filename: String!, contentType: String!, key: String): JsonData!
 }
 
 ############

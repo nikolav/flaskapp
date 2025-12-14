@@ -11,8 +11,9 @@ def gql_arguments_schema(schema):
     @wraps(fn)
     def wrapper(obj, info, **kwargs):
       print('@debug --gql_arguments_schema')
-      data = {}
       
+      data = {}
+
       try:
         data = schema.load(kwargs)
       
@@ -30,4 +31,3 @@ def gql_arguments_schema(schema):
     return wrapper
   
   return decorated
-    
