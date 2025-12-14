@@ -18,8 +18,9 @@ from src.middleware.gql_arguments_schema import gql_arguments_schema
 def resolve_awsUploadPresignedUrl(_obj, _info, filename, contentType, key = None):
   r = Utils.ResponseStatus()
 
-  upload_url = None
-  key        = None
+  upload_url  = None
+  key         = None
+  contentType = None
 
   try:
     _err, aws = aws_session
@@ -38,14 +39,14 @@ def resolve_awsUploadPresignedUrl(_obj, _info, filename, contentType, key = None
         'Key'         : key,
         'ContentType' : contentType,
       },
-      ExpiresIn = int(timedelta(days = 1).total_seconds()),
+      ExpiresIn = int(timedelta(hours = 1).total_seconds()),
     )
 
   except Exception as e:
     r.error = e
 
   else:
-    r.status = { 'uploadUrl': upload_url, 'key': key }
+    r.status = { 'uploadUrl': upload_url, 'key': key, 'contentType': contentType }
 
   
   return r.dump()
