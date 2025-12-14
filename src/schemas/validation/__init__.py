@@ -83,3 +83,22 @@ class SchemaS3PresignedUploadInput(Schema):
     if '..' in value or value.startswith('/'):
       raise ValidationError('Invalid S3 key path')
 
+
+class SchemaS3ListObjects(Schema):
+
+  prefix = fields.String(required = False, allow_none = True)
+
+  @pre_load
+  def prefix_normalized(self, data, **kwargs):
+    # prefix = request.args.get("prefix") or S3_PREFIX
+    # if not prefix.startswith(S3_PREFIX):
+    #     abort(400, description="Invalid prefix")
+    data.setdefault('prefix', Config.AWS_UPLOAD_S3_PREFIX)
+    return data
+
+  @validates('prefix')
+  def validate_prefix(self, value, **kwargs):
+    if not value.startswith(Config.AWS_UPLOAD_S3_PREFIX):
+      raise ValidationError('Invalid prefix')
+
+
