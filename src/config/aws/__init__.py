@@ -5,7 +5,7 @@ initialized = False
 error       = None
 aws_session = None
 
-def aws_session_init(app):
+def aws_session_init(app = None):
   global initialized
   global error
   global aws_session
