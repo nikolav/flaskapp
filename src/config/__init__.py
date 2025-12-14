@@ -204,5 +204,6 @@ class Config:
     # ── Generic fallbacks (use carefully) ──
     'binary/octet-stream': 'application/octet-stream',
   }
-  AWS_UPLOAD_S3_BUCKET = os.getenv('AWS_UPLOAD_S3_BUCKET')
-  AWS_UPLOAD_S3_PREFIX = os.getenv('AWS_UPLOAD_S3_PREFIX')
+  AWS_UPLOAD_S3_BUCKET        = os.getenv('AWS_UPLOAD_S3_BUCKET')
+  AWS_UPLOAD_S3_PREFIX        = os.getenv('AWS_UPLOAD_S3_PREFIX')
+  AWS_UPLOAD_S3_BUCKET_REGION = os.getenv('AWS_UPLOAD_S3_BUCKET_REGION')

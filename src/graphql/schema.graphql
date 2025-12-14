@@ -22,6 +22,7 @@ type Query {
   # aws-upload
   awsUploadPresignedUrl(filename: String!, contentType: String!, key: String): JsonData!
   awsUploadListObjects(prefix: String): JsonData!
+  awsUploadDownloadUrl(key: String!, forceDownload: Boolean): JsonData!
 }
 
 ############

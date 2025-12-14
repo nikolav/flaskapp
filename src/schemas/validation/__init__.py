@@ -99,3 +99,23 @@ class SchemaS3ListObjects(Schema):
       raise ValidationError('Invalid prefix')
 
 
+class SchemaS3ValidateObjectRefInput(Schema):
+  
+  key           = fields.String(required = True)
+  forceDownload = fields.Boolean(allow_none = True)
+
+  @pre_load
+  def forceDownload_normalized(self, data, **kwargs):
+    data.setdefault('forceDownload', False)
+    return data
+  
+  @validates('key')
+  def key_validated(self, value, **kwargs):
+    if not value.startswith(Config.AWS_UPLOAD_S3_PREFIX):
+      raise ValidationError('Invalid key')
+
+
+class SchemaS3ValidateDownloadUrl(SchemaS3ValidateObjectRefInput):
+  pass
+
+
