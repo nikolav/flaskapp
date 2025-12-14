@@ -98,3 +98,73 @@ class Config:
   AWS_ACCESS_KEY_ID     = os.getenv('AWS_ACCESS_KEY_ID')
   AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
   AWS_REGION_NAME       = os.getenv('AWS_REGION_NAME')
+  
+  # uploads
+  UPLOADS_ALLOW_CONTENT_TYPES = {
+    # ── Images ─────────────────────────────
+    'image/jpg',
+    'image/jpeg',
+    'image/png',
+    'image/webp',
+    'image/gif',
+    'image/svg+xml',
+    'image/heic',          # iOS photos
+    'image/heif',
+
+    # ── Documents ──────────────────────────
+    'application/pdf',
+    'text/plain',
+    'text/markdown',
+
+    # Microsoft Office
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+
+    # OpenDocument (LibreOffice)
+    'application/vnd.oasis.opendocument.text',
+    'application/vnd.oasis.opendocument.spreadsheet',
+    'application/vnd.oasis.opendocument.presentation',
+
+    # ── Archives ───────────────────────────
+    'application/zip',
+    'application/x-zip-compressed',
+    'application/x-tar',
+    'application/gzip',
+    'application/x-7z-compressed',
+    'application/x-rar-compressed',
+
+    # ── Audio ──────────────────────────────
+    'audio/mpeg',          # mp3
+    'audio/wav',
+    'audio/ogg',
+    'audio/webm',
+    'audio/aac',
+
+    # ── Video ──────────────────────────────
+    'video/mp4',
+    'video/webm',
+    'video/quicktime',     # .mov (iOS)
+    'video/x-matroska',    # .mkv
+
+    # ── Data / Web ─────────────────────────
+    'application/json',
+    'text/csv',
+    'application/xml',
+    'text/xml',
+
+    # ── Fonts (for web assets) ─────────────
+    'font/woff',
+    'font/woff2',
+    'application/font-woff',
+    'application/font-woff2',
+    'application/vnd.ms-fontobject',
+    'font/ttf',
+    'font/otf',
+
+    # ── Generic fallback (use sparingly) ───
+    'application/octet-stream',
+  }
