@@ -18,9 +18,9 @@ from src.middleware.gql_arguments_schema import gql_arguments_schema
 def resolve_awsUploadPresignedUrl(_obj, _info, filename, contentType, key = None):
   r = Utils.ResponseStatus()
 
-  upload_url  = None
-  key         = None
-  contentType = None
+  UPLOAD_URL   = None
+  CONTENT_TYPE = None
+  KEY          = None
 
   try:
     _err, aws = aws_session
@@ -28,16 +28,16 @@ def resolve_awsUploadPresignedUrl(_obj, _info, filename, contentType, key = None
     s3 = aws.client('s3')
     
     # g.arguments: { filename, contentType, key? }
-    filename    = g.arguments['filename']
-    contentType = g.arguments['contentType']
-    key         = g.arguments.get('key') or Utils.aws_key_random(filename)
+    FILENAME     = g.arguments['filename']
+    CONTENT_TYPE = g.arguments['contentType']
+    KEY          = g.arguments.get('key') or Utils.aws_key_random(FILENAME)
 
-    upload_url = s3.generate_presigned_url(
+    UPLOAD_URL = s3.generate_presigned_url(
       ClientMethod = 'put_object',
       Params = {
         'Bucket'      : Config.AWS_UPLOAD_S3_BUCKET,
-        'Key'         : key,
-        'ContentType' : contentType,
+        'Key'         : KEY,
+        'ContentType' : CONTENT_TYPE,
       },
       ExpiresIn = int(timedelta(hours = 1).total_seconds()),
     )
@@ -46,7 +46,7 @@ def resolve_awsUploadPresignedUrl(_obj, _info, filename, contentType, key = None
     r.error = e
 
   else:
-    r.status = { 'uploadUrl': upload_url, 'key': key, 'contentType': contentType }
+    r.status = { 'uploadUrl': UPLOAD_URL, 'contentType': CONTENT_TYPE, 'key': KEY }
 
   
   return r.dump()

@@ -100,13 +100,10 @@ class Config:
   AWS_REGION_NAME       = os.getenv('AWS_REGION_NAME')
   
   # uploads
-  AWS_UPLOAD_S3_BUCKET        = os.getenv('AWS_UPLOAD_S3_BUCKET')
-  AWS_UPLOAD_S3_PREFIX        = os.getenv('AWS_UPLOAD_S3_PREFIX')
   UPLOADS_MAX_FILENAME_LENGTH = 1024
   UPLOADS_ALLOW_CONTENT_TYPES = {
     # ── Images ─────────────────────────────
     'image/jpeg',
-    'image/jpg',
     'image/png',
     'image/webp',
     'image/gif',
@@ -171,3 +168,41 @@ class Config:
     # ── Generic fallback (use sparingly) ───
     'application/octet-stream',
   }
+  UPLOADS_MIME_ALIASES = {
+    # ── Images ─────────────────────────────
+    'image/jpg': 'image/jpeg',
+    'image/pjpeg': 'image/jpeg',          # legacy IE
+    'image/x-png': 'image/png',            # legacy
+
+    # iOS / HEIC oddities
+    'image/heic-sequence': 'image/heic',
+    'image/heif-sequence': 'image/heif',
+
+    # ── Audio ──────────────────────────────
+    'audio/mp3': 'audio/mpeg',
+    'audio/x-mp3': 'audio/mpeg',
+    'audio/mpeg3': 'audio/mpeg',
+
+    # ── Video ──────────────────────────────
+    'video/m4v': 'video/mp4',
+    'video/x-m4v': 'video/mp4',
+    'video/quicktime': 'video/quicktime',  # keep canonical
+
+    # ── Text / Data ────────────────────────
+    'text/json': 'application/json',
+    'application/x-json': 'application/json',
+    'text/xml': 'application/xml',
+
+    # CSV variants
+    'application/csv': 'text/csv',
+    'text/x-csv': 'text/csv',
+
+    # ── Archives ───────────────────────────
+    'application/x-zip': 'application/zip',
+    'application/x-zip-compressed': 'application/zip',
+
+    # ── Generic fallbacks (use carefully) ──
+    'binary/octet-stream': 'application/octet-stream',
+  }
+  AWS_UPLOAD_S3_BUCKET = os.getenv('AWS_UPLOAD_S3_BUCKET')
+  AWS_UPLOAD_S3_PREFIX = os.getenv('AWS_UPLOAD_S3_PREFIX')

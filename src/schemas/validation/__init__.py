@@ -2,6 +2,7 @@ import re
 
 from marshmallow import Schema
 from marshmallow import fields
+from marshmallow import pre_load
 from marshmallow import validates
 from marshmallow import ValidationError
 
@@ -35,9 +36,20 @@ class SchemaS3PresignedUploadInput(Schema):
   contentType = fields.String(required = True, data_key = 'contentType')
   key         = fields.String(required = False, allow_none = True)
 
-  # ───────────────────────────
+  # Normalization
+  
+  @pre_load
+  def content_type_normalized(self, data, **kwargs):
+    '''
+      Replace contentType using MIME_ALIASES so downstream
+      code always sees canonical MIME values.
+    '''
+    ct = data.get('contentType')
+    if ct:
+      data['contentType'] = Config.UPLOADS_MIME_ALIASES.get(ct.lower(), ct.lower())
+    return data
+
   # Validators
-  # ───────────────────────────
 
   @validates('filename')
   def validate_filename(self, value, **kwargs):
