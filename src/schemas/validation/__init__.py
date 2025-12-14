@@ -90,9 +90,6 @@ class SchemaS3ListObjects(Schema):
 
   @pre_load
   def prefix_normalized(self, data, **kwargs):
-    # prefix = request.args.get("prefix") or S3_PREFIX
-    # if not prefix.startswith(S3_PREFIX):
-    #     abort(400, description="Invalid prefix")
     data.setdefault('prefix', Config.AWS_UPLOAD_S3_PREFIX)
     return data
 
