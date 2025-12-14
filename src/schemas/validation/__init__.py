@@ -44,9 +44,10 @@ class SchemaS3PresignedUploadInput(Schema):
       Replace contentType using MIME_ALIASES so downstream
       code always sees canonical MIME values.
     '''
-    ct = data.get('contentType')
-    if ct:
-      data['contentType'] = Config.UPLOADS_MIME_ALIASES.get(ct.lower(), ct.lower())
+    CT = data.get('contentType')
+    if CT:
+      ct = CT.lower()
+      data['contentType'] = Config.UPLOADS_MIME_ALIASES.get(ct, ct)
     return data
 
   # Validators
