@@ -61,4 +61,7 @@ type Mutation {
   viberChannelSetupChannelsDrop(channels: [String!]): JsonData!
   viberSendTextMessage(payload: JsonData!): JsonData!
   viberSendPictureMessage(payload: JsonData!): JsonData!
+
+  # aws-upload
+  awsUploadDeleteObject(key: String!): JsonData!
 }

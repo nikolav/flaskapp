@@ -1,5 +1,6 @@
 
 import json
+from http import HTTPStatus
 from uuid import uuid4 as uuid
 
 from marshmallow import fields
@@ -19,9 +20,13 @@ class _SchemaResponseStatus(Schema):
   def resolve_status(self, node):
     return getattr(node, 'status')
 
-_schema = _SchemaResponseStatus()
+
+_schema       = _SchemaResponseStatus()
+_httpStatuses = { val.value: val.name.lower() for val in HTTPStatus }
 
 class Utils:  
+  httpStatuses = _httpStatuses
+
   class ResponseStatus():
     def __init__(self):
       self.error  = None
@@ -47,4 +52,5 @@ class Utils:
   def aws_key_random(filename):
     return f'{Config.AWS_UPLOAD_S3_PREFIX.rstrip('/')}/{uuid().hex}{Utils.file_extension(filename)}'
 
-
+  
+  

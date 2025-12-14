@@ -119,3 +119,7 @@ class SchemaS3ValidateDownloadUrl(SchemaS3ValidateObjectRefInput):
   pass
 
 
+class SchemaS3ValidateDeleteObjectInput(SchemaS3ValidateObjectRefInput):
+  pass
+
+

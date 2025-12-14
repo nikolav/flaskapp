@@ -11,3 +11,5 @@ from .collections import collections_docs_upsert
 from .collections import collections_docs_drop
 
 from .mail        import send_message
+
+from .aws_upload import aws_upload_delete_object
