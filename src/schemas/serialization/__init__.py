@@ -139,3 +139,14 @@ class SchemaS3ObjectMetadata(Schema):
     return data
 
 
+class SchemaS3SerializeListObjects(Schema):
+  key           = fields.String(attribute = 'Key')
+  ContentLength = fields.Integer(attribute = 'Size')
+  LastModified  = fields.Method('calc_LastModified', allow_none = True)
+  ETag          = fields.String()
+
+  def calc_LastModified(self, node):
+    LastModified_ = node.get('LastModified')
+    return LastModified_.isoformat() if LastModified_ else None
+
+

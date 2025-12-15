@@ -7,7 +7,8 @@ from src.config        import Config
 from src.utils         import Utils
 
 from src.middleware.gql_arguments_schema import gql_arguments_schema
-from src.schemas.validation import SchemaS3ListObjects
+from src.schemas.validation    import SchemaS3ListObjects
+from src.schemas.serialization import SchemaS3SerializeListObjects
 
 
 # awsUploadListObjects(prefix: String): JsonData!
@@ -33,14 +34,7 @@ def resolve_awsUploadListObjects(_obj, _info, prefix = None):
       )
 
     isTruncated = res.get('IsTruncated', False)
-
-    objects = [
-      {
-        'key'          : node['Key'],
-        'size'         : node.get('Size'),
-        'lastModified' : node.get('LastModified').isoformat() if node.get('LastModified') else None,
-        'etag'         : node.get('ETag'),
-      } for node in res.get('Contents', [])]
+    objects     = SchemaS3SerializeListObjects(many = True).dump(res.get('Contents', []))
       
   except Exception as e:
     r.error = e
