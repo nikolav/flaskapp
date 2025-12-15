@@ -37,7 +37,7 @@ type Mutation {
     merge: Boolean
   ): JsonData!
   # batch remove paths for 'cache_key'
-  cacheRedisDropPathsAtKey(cache_key: String!, paths: [String!]!): JsonData!
+  cacheRedisDropPathsAtKey(cache_key: String!, paths: [String!]!, separator: String): JsonData!
 
   # messaging
   cloudMessagingPing(payload: JsonData): JsonData!

@@ -75,7 +75,7 @@ class Cache:
 
 
   @staticmethod
-  def drop_paths_at_key(token, *paths):
+  def drop_paths_at_key(token, *paths, SEPARATOR = None):
     # paths <string:dotted>[]
     changes = 0
     
@@ -83,7 +83,7 @@ class Cache:
       dd = Cache.key(token)
       if dd:
         for path in paths:
-          changes += Dicts.rm(dd, path, SEPARATOR = '.')
+          changes += Dicts.rm(dd, path, SEPARATOR = SEPARATOR)
         
         if 0 < changes:
           Cache.commit(token, PATCH = dd, MERGE = False)

@@ -6,14 +6,14 @@ from src.config                 import Config
 from src.services.io            import IO
 
 
-# cacheRedisDropPathsAtKey(cache_key: String!, paths: [String!]!): JsonData!
+# cacheRedisDropPathsAtKey(cache_key: String!, paths: [String!]!, separator: String): JsonData!
 @mutation.field('cacheRedisDropPathsAtKey')
-def resolve_cacheRedisDropPathsAtKey(_obj, _info, cache_key, paths):
+def resolve_cacheRedisDropPathsAtKey(_obj, _info, cache_key, paths, separator = None):
   r       = Utils.ResponseStatus()
   changes = 0
 
   try:
-    changes += Cache.drop_paths_at_key(cache_key, *paths)
+    changes += Cache.drop_paths_at_key(cache_key, *paths, SEPARATOR = separator)
 
   except Exception as e:
     r.error = e
