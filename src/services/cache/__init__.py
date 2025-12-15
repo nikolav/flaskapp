@@ -84,7 +84,9 @@ class Cache:
       if dd:
         for path in paths:
           changes += Dicts.rm(dd, path, SEPARATOR = SEPARATOR)
-        
+          if not dd:
+            break
+          
         if 0 < changes:
           Cache.commit(token, PATCH = dd, MERGE = False)
     
