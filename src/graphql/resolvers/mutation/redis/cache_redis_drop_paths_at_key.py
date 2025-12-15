@@ -13,7 +13,7 @@ def resolve_cacheRedisDropPathsAtKey(_obj, _info, cache_key, paths, separator = 
   changes = 0
 
   try:
-    changes += Cache.drop_paths_at_key(cache_key, *paths, SEPARATOR = separator)
+    changes += Cache.drop_paths_at_key(cache_key, *set(paths), SEPARATOR = separator)
 
   except Exception as e:
     r.error = e
