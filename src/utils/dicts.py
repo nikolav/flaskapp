@@ -31,11 +31,14 @@ class Dicts:
   
   
   @staticmethod
-  def rm(node, path):
+  def rm(node, path, *, SEPARATOR = None):
+    changes = 0
     try:
-      dpath.delete(node, path)
+      changes += dpath.delete(node, path, separator = SEPARATOR)
     except PathNotFound:
       pass
+    
+    return changes
 
   
   @staticmethod

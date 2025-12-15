@@ -52,7 +52,7 @@ class Cache:
   
   @staticmethod
   def commit(token, *, PATCH = None, MERGE = True):
-    if not Cache.client or not PATCH:
+    if not Cache.client or PATCH is None:
       raise Exception('@Cache:invalid')
 
     if MERGE:
@@ -72,5 +72,22 @@ class Cache:
   def ls(*, MATCH = '*', COUNT = 1000):
     # keys are bytes if FlaskRedis was initialized without 'decode_responses=True'
     return map(lambda key: key.decode('utf-8'), Cache.client.scan_iter(match = MATCH, count = COUNT))
+
+
+  @staticmethod
+  def drop_paths_at_key(token, *paths):
+    # paths <string:dotted>[]
+    changes = 0
+    
+    if paths:
+      dd = Cache.key(token)
+      if dd:
+        for path in paths:
+          changes += Dicts.rm(dd, path, SEPARATOR = '.')
+        
+        if 0 < changes:
+          Cache.commit(token, PATCH = dd, MERGE = False)
+    
+    return changes
 
 

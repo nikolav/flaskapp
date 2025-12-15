@@ -1,5 +1,6 @@
 
 from .redis       import cache_redis_commit
+from .redis       import cache_redis_drop_paths_at_key
 
 from .messaging   import cloud_messaging_ping
 from .messaging   import viber_channels_setup_set_webhook
