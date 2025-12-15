@@ -2,6 +2,7 @@
 from datetime import timedelta
 
 from flask import g
+from botocore.config import Config as BotoConfig
 
 from src.graphql.setup import query
 from flask_app         import aws_session
@@ -25,7 +26,11 @@ def resolve_awsUploadPresignedUrl(_obj, _info, filename, contentType, key = None
   try:
     _err, aws = aws_session
     
-    s3 = aws.client('s3')
+    # s3 = aws.client('s3') 
+    s3 = aws.client('s3', 
+                  config      = BotoConfig(signature_version = 's3v4'),
+                  region_name = Config.AWS_UPLOAD_S3_BUCKET_REGION,
+                )
     
     # g.arguments: { filename, contentType, key? }
     FILENAME     = g.arguments['filename']

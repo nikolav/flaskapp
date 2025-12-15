@@ -23,6 +23,7 @@ type Query {
   awsUploadPresignedUrl(filename: String!, contentType: String!, key: String): JsonData!
   awsUploadListObjects(prefix: String): JsonData!
   awsUploadDownloadUrl(key: String!, forceDownload: Boolean): JsonData!
+  awsUploadObjectMetadata(key: String!): JsonData!
 }
 
 ############
@@ -64,4 +65,5 @@ type Mutation {
 
   # aws-upload
   awsUploadDeleteObject(key: String!): JsonData!
+  awsUploadDeleteObjectsAllUnderPrefix(prefix: String): JsonData!
 }

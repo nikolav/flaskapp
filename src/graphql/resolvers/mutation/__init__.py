@@ -13,3 +13,4 @@ from .collections import collections_docs_drop
 from .mail        import send_message
 
 from .aws_upload import aws_upload_delete_object
+from .aws_upload import aws_upload_delete_objects_all_under_prefix

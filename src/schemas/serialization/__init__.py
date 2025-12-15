@@ -5,6 +5,7 @@ from bson import ObjectId
 # https://marshmallow.readthedocs.io/en/stable/quickstart.html#field-validators-as-methods
 from marshmallow import Schema
 from marshmallow import fields
+from marshmallow import post_dump
 from marshmallow import ValidationError
 from marshmallow import INCLUDE
 
@@ -123,4 +124,18 @@ class SchemaSerializeNodes(SchemaSerializeTimes):
   tags     = fields.List(fields.String())
   parent   = fields.Nested('SchemaSerializeNodes', exclude = ('parent', 'children',), allow_none = True)
   children = fields.List(fields.Nested('SchemaSerializeNodes', exclude = ('parent', 'children',)))
+
+
+class SchemaS3ObjectMetadata(Schema):
+  LastModified   = fields.DateTime()
+  ContentType    = fields.String()
+  ContentLength  = fields.Integer()
+  ETag           = fields.String()
+  Metadata       = fields.Dict(required = False, allow_none = True)
+  
+  @post_dump
+  def metadata_normalized(self, data, **kwargs):
+    data.setdefault('Metadata', {})
+    return data
+
 

@@ -14,7 +14,7 @@ from src.schemas.validation import SchemaS3ValidateDeleteObjectInput
 # awsUploadDeleteObject(key: String!): JsonData!
 @mutation.field('awsUploadDeleteObject')
 @gql_arguments_schema(SchemaS3ValidateDeleteObjectInput())
-def resolve_awsUploadDeleteObject(_obj, _info, key, **kwargs):
+def resolve_awsUploadDeleteObject(_obj, _info, key):
   r     = Utils.ResponseStatus()
   res   = None
   code_ = None
@@ -31,13 +31,14 @@ def resolve_awsUploadDeleteObject(_obj, _info, key, **kwargs):
       )
     
     # res.check@ResponseMetadata/HTTPStatusCode
-    code_ = Dicts.get(res, 'ResponseMetadata/HTTPStatusCode')
+    code_   = Dicts.get(res, 'ResponseMetadata/HTTPStatusCode')
+    status_ = Utils.httpStatuses.get(code_, None)
     
   except Exception as e:
     r.error = e
   
   else:
-    r.status = code_
+    r.status = {'code': code_, 'status': status_, 'key': key_ }
 
   
   return r.dump()

@@ -84,13 +84,14 @@ class SchemaS3PresignedUploadInput(Schema):
       raise ValidationError('Invalid S3 key path')
 
 
-class SchemaS3ListObjects(Schema):
+class SchemaS3ValidatePrefixInput(Schema):
 
   prefix = fields.String(required = False, allow_none = True)
 
   @pre_load
   def prefix_normalized(self, data, **kwargs):
-    data.setdefault('prefix', Config.AWS_UPLOAD_S3_PREFIX)
+    if not data.get('prefix'):
+      data['prefix'] = Config.AWS_UPLOAD_S3_PREFIX
     return data
 
   @validates('prefix')
@@ -99,15 +100,13 @@ class SchemaS3ListObjects(Schema):
       raise ValidationError('Invalid prefix')
 
 
+class SchemaS3ListObjects(SchemaS3ValidatePrefixInput):
+  pass
+
+
 class SchemaS3ValidateObjectRefInput(Schema):
   
-  key           = fields.String(required = True)
-  forceDownload = fields.Boolean(allow_none = True)
-
-  @pre_load
-  def forceDownload_normalized(self, data, **kwargs):
-    data.setdefault('forceDownload', False)
-    return data
+  key = fields.String(required = True)
   
   @validates('key')
   def key_validated(self, value, **kwargs):
@@ -116,10 +115,20 @@ class SchemaS3ValidateObjectRefInput(Schema):
 
 
 class SchemaS3ValidateDownloadUrl(SchemaS3ValidateObjectRefInput):
-  pass
+
+  forceDownload = fields.Boolean(allow_none = True)
+  
+  @pre_load
+  def forceDownload_normalized(self, data, **kwargs):
+    data.setdefault('forceDownload', False)
+    return data
 
 
 class SchemaS3ValidateDeleteObjectInput(SchemaS3ValidateObjectRefInput):
+  pass
+
+
+class SchemaS3ValidateObjectMetadataInput(SchemaS3ValidateObjectRefInput):
   pass
 
 

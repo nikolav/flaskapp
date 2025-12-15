@@ -52,5 +52,4 @@ class Utils:
   def aws_key_random(filename):
     return f'{Config.AWS_UPLOAD_S3_PREFIX.rstrip('/')}/{uuid().hex}{Utils.file_extension(filename)}'
 
-  
-  
+
